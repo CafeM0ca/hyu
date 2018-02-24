@@ -10,13 +10,12 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "KeyComponent.h"
-
+#include "KeyControl.h"
 //==============================================================================
 KeyComponent::KeyComponent()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-
 }
 
 KeyComponent::~KeyComponent()
@@ -32,12 +31,19 @@ void KeyComponent::paint (Graphics& g)
        drawing code..
     */
 	
+	g.setColour(Colours::black);
+	g.setFont(60.0f);
+	g.drawText("D",getWidth()/12*4,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
+	g.drawText("F",getWidth()/12*5,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
+	g.drawText("J",getWidth()/12*6,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
+	g.drawText("K",getWidth()/12*7,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 
+	//cin으로 처리하면 콘솔에서 입력해야하는 문제가 생김...
 }
 
 void KeyComponent::resized()
 {
-    // This method is where you should set the bounds of any child
+   // This method is where you should set the bounds of any child
     // components that your component contains..
-
 }
+

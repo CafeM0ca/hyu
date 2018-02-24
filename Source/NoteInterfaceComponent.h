@@ -32,6 +32,7 @@ private:
     NoteFrameComponent nframe4;
     NoteFrameComponent nframe5;
     NoteFrameComponent nframe6;
+
     Note block;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteComponent)

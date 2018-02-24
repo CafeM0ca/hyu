@@ -10,6 +10,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "NoteInterfaceComponent.h"
+#include "KeyComponent.h"
 //#include "BackgroundImageComponent.h"
 //==============================================================================
 /*
@@ -35,5 +36,6 @@ private:
     // Your private member variables go here...
 //	BackgroundImageComponent pink_tree_img;
     NoteComponent notecomponent;
+	KeyComponent keycomponent;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
