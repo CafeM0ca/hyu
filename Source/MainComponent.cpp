@@ -14,11 +14,7 @@ MainComponent::MainComponent()
     // you add any child components.
     setSize (1280,1080);
     setFramesPerSecond (60); // This sets the frequency of the update calls.
-    addAndMakeVisible(nframe1);
-    addAndMakeVisible(nframe2);
-    addAndMakeVisible(nframe3);
-    addAndMakeVisible(nframe4);
-	addAndMakeVisible(nframe5);
+    addAndMakeVisible(notecomponent);
 }
 
 MainComponent::~MainComponent()
@@ -37,13 +33,7 @@ void MainComponent::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll(Colours::white);
-    //setBounds는 화면에 표시할 영역. 3,4인자는 1,2인자로부터의 떨어진 값
-    nframe1.setBounds(getWidth()/12*4,0,getWidth()/12,getHeight());   
-    nframe2.setBounds(getWidth()/12*5,0,getWidth()/12,getHeight());   
-    nframe3.setBounds(getWidth()/12*6,0,getWidth()/12,getHeight());   
-    nframe4.setBounds(getWidth()/12*7,0,getWidth()/12,getHeight());   
-	nframe5.setBounds(getWidth()/12*4,getHeight()/12*11,getWidth()/12*4,getHeight());
-    // You can add your drawing code here!
+    notecomponent.setBounds(0,0,getWidth(),getHeight());
 }
 
 void MainComponent::resized()

@@ -16,7 +16,6 @@ NoteFrameComponent::NoteFrameComponent()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-
 }
 
 NoteFrameComponent::~NoteFrameComponent()
@@ -34,6 +33,7 @@ void NoteFrameComponent::paint (Graphics& g)
     g.setColour(Colours::black);
 
     g.drawRect(0,0,getWidth(),getHeight(),1);
+	
 }
 
 void NoteFrameComponent::resized()

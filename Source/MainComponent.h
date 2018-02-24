@@ -9,7 +9,8 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "NoteFrameComponent.h"
+#include "NoteInterfaceComponent.h"
+//#include "BackgroundImageComponent.h"
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
@@ -32,11 +33,7 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
-    NoteFrameComponent nframe1;
-    NoteFrameComponent nframe2;
-    NoteFrameComponent nframe3;
-    NoteFrameComponent nframe4;
-    NoteFrameComponent nframe5;
-
+//	BackgroundImageComponent pink_tree_img;
+    NoteComponent notecomponent;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
