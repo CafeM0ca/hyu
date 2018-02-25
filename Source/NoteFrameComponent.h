@@ -1,10 +1,8 @@
 /*
   ==============================================================================
-
     NoteFrameComponent.h
     Created: 22 Feb 2018 8:07:50pm
     Author:  moca
-
   ==============================================================================
 */
 
@@ -26,3 +24,4 @@ public:
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteFrameComponent)
 };
+

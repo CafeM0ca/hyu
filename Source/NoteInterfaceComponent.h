@@ -1,10 +1,8 @@
 /*
   ==============================================================================
-
     NoteComponent.h
     Created: 23 Feb 2018 8:41:53pm
     Author:  moca
-
   ==============================================================================
 */
 
@@ -37,3 +35,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteComponent)
 };
+

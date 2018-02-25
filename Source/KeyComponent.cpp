@@ -1,23 +1,20 @@
 /*
   ==============================================================================
-
     KeyComponent.cpp
     Created: 24 Feb 2018 6:38:12pm
     Author:  moca
-
   ==============================================================================
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "KeyComponent.h"
-#include "KeyControl.h"
+//#include "KeyControl.h"
 //==============================================================================
 KeyComponent::KeyComponent()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-//	setVisible(true);
-//	addKeyListener(this);
+	addAndMakeVisible(key);	
 //	grapKeyBoardFocus();
 }
 
@@ -29,7 +26,6 @@ void KeyComponent::paint (Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
-
        You should replace everything in this method with your own
        drawing code..
     */
@@ -62,4 +58,4 @@ virtual bool keyPress (const KeyPress& key) override{
 	cout << "keyPress excuted";
 	return false;
 }
-*/
+*virtual /

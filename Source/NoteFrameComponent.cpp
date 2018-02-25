@@ -1,10 +1,8 @@
 /*
   ==============================================================================
-
     NoteFrameComponent.cpp
     Created: 22 Feb 2018 8:07:50pm
     Author:  moca
-
   ==============================================================================
 */
 
@@ -26,7 +24,6 @@ void NoteFrameComponent::paint (Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
-
        You should replace everything in this method with your own
        drawing code..
     */

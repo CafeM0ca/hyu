@@ -1,10 +1,8 @@
 /*
   ==============================================================================
-
     Note.cpp
     Created: 22 Feb 2018 10:36:30pm
     Author:  moca
-
   ==============================================================================
 */
 
@@ -28,7 +26,6 @@ void Note::paint (Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
-
        You should replace everything in this method with your own
        drawing code..
     */
