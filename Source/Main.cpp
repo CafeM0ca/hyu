@@ -1,10 +1,7 @@
 /*
   ==============================================================================
-
     This file was auto-generated!
-
     It contains the basic startup code for a JUCE application.
-
   ==============================================================================
 */
 
@@ -87,7 +84,8 @@ public:
            you really have to override any DocumentWindow methods, make sure your
            subclass also calls the superclass's method.
         */
-
+	
+	
     private:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };

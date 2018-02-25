@@ -1,8 +1,6 @@
 /*
   ==============================================================================
-
     This file was auto-generated!
-
   ==============================================================================
 */
 
@@ -13,8 +11,10 @@ MainComponent::MainComponent()
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (1280,1080);
-    setFramesPerSecond (60); // This sets the frequency of the update calls.
+//    setFramesPerSecond (60); // This sets the frequency of the update calls.
+	setFramesPerSecond(20);
     addAndMakeVisible(notecomponent);
+    addAndMakeVisible(keycomponent);
 }
 
 MainComponent::~MainComponent()
@@ -34,6 +34,7 @@ void MainComponent::paint (Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll(Colours::white);
     notecomponent.setBounds(0,0,getWidth(),getHeight());
+	keycomponent.setBounds(0,0,getWidth(),getHeight());
 }
 
 void MainComponent::resized()

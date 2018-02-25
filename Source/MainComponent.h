@@ -1,8 +1,6 @@
 /*
   ==============================================================================
-
     This file was auto-generated!
-
   ==============================================================================
 */
 
@@ -10,6 +8,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "NoteInterfaceComponent.h"
+#include "KeyComponent.h"
 //#include "BackgroundImageComponent.h"
 //==============================================================================
 /*
@@ -29,11 +28,11 @@ public:
     //==============================================================================
     void paint (Graphics& g) override;
     void resized() override;
-
 private:
     //==============================================================================
     // Your private member variables go here...
 //	BackgroundImageComponent pink_tree_img;
     NoteComponent notecomponent;
+	KeyComponent keycomponent;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
