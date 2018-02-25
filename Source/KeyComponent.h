@@ -15,7 +15,7 @@
 /*
 */
 
-class KeyComponent    : public Component
+class KeyComponent    : public Component						//public KeyListener
 {
 public:
     KeyComponent();
@@ -23,6 +23,7 @@ public:
 
     void paint (Graphics&) override;
     void resized() override;
+	//virtual bool keyPressed(const KeyPress& key) override;
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
 };
