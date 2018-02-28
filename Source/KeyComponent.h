@@ -1,32 +1,72 @@
 /*
   ==============================================================================
-    KeyComponent.h
-    Created: 24 Feb 2018 6:38:12pm
-    Author:  moca
+
+  This is an automatically generated GUI class created by the Projucer!
+
+  Be careful when adding custom code to these files, as only the code within
+  the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
+  and re-saved.
+
+  Created with Projucer version: 5.2.1
+
+  ------------------------------------------------------------------------------
+
+  The Projucer is part of the JUCE library.
+  Copyright (c) 2017 - ROLI Ltd.
+
   ==============================================================================
 */
 
 #pragma once
 
+//[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
-//==============================================================================
-/*
-*/
+//[/Headers]
 
-class KeyComponent    : public Component
+
+
+//==============================================================================
+/**
+                                                                    //[Comments]
+    An auto-generated component, created by the Projucer.
+
+    Describe your class and how it works here!
+                                                                    //[/Comments]
+*/
+class KeyComponent  : public Component
 {
 public:
-    KeyComponent();
+    //==============================================================================
+    KeyComponent ();
     ~KeyComponent();
 
-    void paint (Graphics&) override;
-    void resized() override;
+    //==============================================================================
+    //[UserMethods]     -- You can add your own custom methods in this section.
+    //[/UserMethods]
 
-	//originatingComponent key이벤트를 받을 컴포넌트 
-	bool KeyListener::keyPressed(const KeyPress& key,
-			Component *originatingComponent) override;
+    void paint (Graphics& g) override;
+    void resized() override;
+    bool keyPressed (const KeyPress& key) override;
+
+
+
 private:
-	KeyPress key;
+    //[UserVariables]   -- You can add your own custom variables in this section.
+    //[/UserVariables]
+
+    //==============================================================================
+
+
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
 };
 
+class KeyControl :public Component
+{
+public:
+	KeyControl();
+	~KeyControl();
+	bool KeyPress (); 
+//[EndFile] You can add extra defines here...
+//[/EndFile]
+};
