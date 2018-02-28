@@ -61,12 +61,5 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
 };
 
-class KeyControl :public Component
-{
-public:
-	KeyControl();
-	~KeyControl();
-	bool KeyPress (); 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-};

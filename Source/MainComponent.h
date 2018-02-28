@@ -7,7 +7,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "NoteInterfaceComponent.h"
+#include "NoteComponent.h"
 #include "KeyComponent.h"
 //#include "BackgroundImageComponent.h"
 //==============================================================================

@@ -31,10 +31,11 @@ KeyComponent::KeyComponent ()
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
-	setWantsKeyboardFocus(true);
+
 
     //[UserPreSize]
     //[/UserPreSize]
+	setWantsKeyboardFocus(true);
 
     //[Constructor] You can add your own custom stuff here..
     //[/Constructor]
@@ -47,7 +48,8 @@ KeyComponent::~KeyComponent()
 
 
 
-	//[/Destructor]
+    //[Destructor]. You can add your own custom destruction code here..
+    //[/Destructor]
 }
 
 //==============================================================================
@@ -57,18 +59,13 @@ void KeyComponent::paint (Graphics& g)
     //[/UserPrePaint]
 
 
-	g.setColour(Colours::black);
+    g.setColour(Colours::black);
 	g.setFont(60.0f);
 	g.drawText("D",getWidth()/12*4,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("F",getWidth()/12*5,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("J",getWidth()/12*6,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("K",getWidth()/12*7,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
-
-
-
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
+//[/UserPaint]
 }
 
 void KeyComponent::resized()
@@ -85,17 +82,17 @@ bool KeyComponent::keyPressed (const KeyPress& key)
     //[UserCode_keyPressed] -- Add your code here...
 	switch(key.getTextCharacter()){
 		case 'd':
-			DBG("d pressed"); 
+			DBG("d pressed");
 			break;
 		case 'f':
-			DBG("f pressed"); 
+			DBG("f pressed");
 			break;
 		case 'j':
-			DBG("f pressed"); 
-			// 
+			DBG("f pressed");
+			//
 			break;
 		case 'k':
-			DBG("k pressed"); 
+			DBG("k pressed");
 			break;
 	}
     return false;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
