@@ -11,14 +11,15 @@
 //==============================================================================
 Audio::Audio() :state(Stopped)
 {
-    // Make sure you set the size of the component after
-    // you add any child components.
-
-    // specify the number of input and output channels that we want to open
-	//formatManager.registerFormat(new MP3AudioFormat(),false);
-	formatManager.registerBasicFormats(); //default wav
-	//transportSource.addChangeListener(this);	
-    setAudioChannels (0, 2);
+	
+	formatManager.registerBasicFormats();       // [1]
+//	transportSource.addChangeListener(this);
+//	changeState(Playing);
+	DBG("before SelectSong");
+	SelectSong();
+	DBG("after SelectSong");
+	setAudioChannels (0, 2);
+//	SelectSong();
 }
 
 Audio::~Audio()
@@ -37,7 +38,8 @@ void Audio::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
     // but be careful - it will be called on the audio thread, not the GUI thread.
 
     // For more details, see the help for AudioProcessor::prepareToPlay()
-
+	// AudioSource의 구현부. AudioSource를 구현하라.
+	DBG("prepareToPlay");
 	transportSource.prepareToPlay(samplesPerBlockExpected,sampleRate);
 }
 
@@ -49,14 +51,17 @@ void Audio::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 
     // Right now we are not producing any data, in which case we need to clear the buffer
     // (to prevent the output of random noise)
-	if(readerSource == nullptr)
-	{	
+	// AudioSource참고
+	DBG("getNextAudioBlock");
+	if (readerSource == nullptr)
+	{
 		bufferToFill.clearActiveBufferRegion();
 		return;
 	}
-	transportSource.getNextAudioBlock(bufferToFill);
-	transportSource.start();
+	
+	transportSource.getNextAudioBlock (bufferToFill);
 }
+
 
 void Audio::releaseResources()
 {
@@ -64,6 +69,8 @@ void Audio::releaseResources()
     // restarted due to a setting change.
 
     // For more details, see the help for AudioProcessor::releaseResources()
+	// AudioSource의 구현부. 아무래도 AudioSource를 확인해야할듯.
+	DBG("releaseResources");
 	transportSource.releaseResources();
 }
 
@@ -72,21 +79,61 @@ void Audio::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
-	openButton.setBounds(0,0,50,30);
 }
 
-void Audio::PlaySong()
-{	
-	File file("/home/moca/coding/cpp/hyu/Song/Diffrent Heaven - Nekozilla.wav");
-	AudioFormatReader *reader = formatManager.createReaderFor(file);
 
+void Audio::SelectSong()
+{	
+	File file("/home/moca/coding/cpp/hyu/Song/test.wav");
+	AudioFormatReader *reader = formatManager.createReaderFor(file);
+	
+	DBG("띠용1");
 	if(reader != nullptr)
 	{
-		DBG("띠용");
+		DBG("띠용2");
 		//ScopedPointer는 스마트 포인터 같은 개념
 		ScopedPointer<AudioFormatReaderSource> newSource = new AudioFormatReaderSource(reader,true);
+
+		/* setSource  삽입할 소스를 설정
+		 * 1 nullptr, 
+		 * 2 버퍼 읽을 사이즈, 
+		 * 3 백그라운드 버퍼읽기 쓰레드
+		 * 4 샘플의 재생속도. 0이면 조절안함 알아서 음정도 맞춰줌
+		 * 5 재생하는데 필요한 채널 수*/
 		transportSource.setSource(newSource,0,nullptr,reader->sampleRate);
-		//playButton.setEnabled(true);
 		readerSource = newSource.release();
+		changeState(Starting);
 	}
 }
+ 
+
+void Audio::changeState (TransportState newState)
+{
+	DBG("changeState called");
+	if (state != newState)
+	{
+		state = newState;
+		
+		switch (state)
+		{
+			case Stopped:        
+				transportSource.setPosition (0.0);
+				break;
+			
+			case Starting:   
+				// start setSource로 설정되면 재생.
+				// 이 객체에 등록된 ChangeListener에 메시지를 보냄. 메시지를 보냄
+				DBG("Starting");
+				transportSource.start();
+				break;
+				
+			case Playing: 
+				break;
+				
+			case Stopping:
+				transportSource.stop();
+				break;
+		}
+	}
+}
+

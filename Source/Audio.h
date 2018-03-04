@@ -15,7 +15,7 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class Audio   : public AudioAppComponent
+class Audio   : public AudioAppComponent 
 {
 public:
     //==============================================================================
@@ -27,25 +27,26 @@ public:
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
     void releaseResources() override;
 
-    //==============================================================================
     void resized() override;
-	void PlaySong();
-private:
-    //==============================================================================
-    // Your private member variables go here...
+	void SelectSong();
 	enum TransportState
 	{
 		Stopped,
 		Starting,
 		Playing,
-		Stoppinng
+		Stopping
 	};
-	
-	TextButton openButton;
-	AudioFormatManager formatManager;
-	AudioTransportSource transportSource;
-	ScopedPointer<AudioFormatReaderSource> readerSource;
-	TransportState state;
+
+
+private:
+    //==============================================================================
+    // Your private member variables go here...
+	void changeState(TransportState newState);
+    AudioFormatManager formatManager;
+    ScopedPointer<AudioFormatReaderSource> readerSource;
+    AudioTransportSource transportSource;
+    TransportState state;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Audio)
 };

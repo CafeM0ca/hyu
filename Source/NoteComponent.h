@@ -11,6 +11,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Note.h"
 #include "Map.h"
+#include "Audio.h"
 //==============================================================================
 /*
 */
@@ -32,7 +33,7 @@ private:
     Map nframe6;
 
     Note block;
-
+	Audio bgm;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteComponent)
 };
 

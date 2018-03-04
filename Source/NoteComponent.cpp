@@ -22,6 +22,7 @@ NoteComponent::NoteComponent()
     addAndMakeVisible(nframe5);
     addAndMakeVisible(nframe6);
 //    addAndMakeVisible(block);
+	addAndMakeVisible(bgm);
 }
 
 NoteComponent::~NoteComponent()
@@ -43,7 +44,12 @@ void NoteComponent::paint (Graphics& g)
     nframe4.setBounds(getWidth()/12*7,0,getWidth()/12,getHeight());   
 	nframe5.setBounds(getWidth()/12*4,getHeight()/12*11,getWidth()/12*4,getHeight());
     nframe6.setBounds(getWidth()/12*4,getHeight()/12*10.75,getWidth()/12*4,getHeight()); //판정 포인트 0.25
-	
+	g.setColour(Colours::black);
+	g.setFont(60.0f);
+	g.drawText("D",getWidth()/12*4,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
+	g.drawText("F",getWidth()/12*5,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
+	g.drawText("J",getWidth()/12*6,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
+	g.drawText("K",getWidth()/12*7,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 }
 
 void NoteComponent::resized()
