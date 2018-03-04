@@ -19,6 +19,7 @@ Audio::Audio() :state(Stopped)
 	SelectSong();
 	DBG("after SelectSong");
 	setAudioChannels (0, 2);
+	DBG("fuck");
 //	SelectSong();
 }
 
@@ -102,7 +103,7 @@ void Audio::SelectSong()
 		 * 5 재생하는데 필요한 채널 수*/
 		transportSource.setSource(newSource,0,nullptr,reader->sampleRate);
 		readerSource = newSource.release();
-		changeState(Starting);
+		changeState(Starting); // 파일 경로지정하고 다 셋팅한 후 Starting해야함.
 	}
 }
  
