@@ -29,7 +29,7 @@ void Map::paint (Graphics& g)
     */
     g.setColour(Colours::black);
 
-    g.drawRect(0,0,getWidth(),getHeight(),1);
+    g.drawRect(0,0,getWidth(),getHeight(),3);
 	
 }
 

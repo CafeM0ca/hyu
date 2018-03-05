@@ -11,8 +11,7 @@ MainComponent::MainComponent()
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (1280,1080);
-//    setFramesPerSecond (60); // This sets the frequency of the update calls.
-	setFramesPerSecond(20);
+    setFramesPerSecond (120); // This sets the frequency of the update calls.
     addAndMakeVisible(notecomponent);
     addAndMakeVisible(keycomponent);
 }

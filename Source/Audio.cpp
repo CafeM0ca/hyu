@@ -15,11 +15,8 @@ Audio::Audio() :state(Stopped)
 	formatManager.registerBasicFormats();       // [1]
 //	transportSource.addChangeListener(this);
 //	changeState(Playing);
-	DBG("before SelectSong");
 	SelectSong();
-	DBG("after SelectSong");
 	setAudioChannels (0, 2);
-	DBG("fuck");
 //	SelectSong();
 }
 
@@ -40,7 +37,6 @@ void Audio::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 
     // For more details, see the help for AudioProcessor::prepareToPlay()
 	// AudioSource의 구현부. AudioSource를 구현하라.
-	DBG("prepareToPlay");
 	transportSource.prepareToPlay(samplesPerBlockExpected,sampleRate);
 }
 
@@ -53,7 +49,6 @@ void Audio::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
     // Right now we are not producing any data, in which case we need to clear the buffer
     // (to prevent the output of random noise)
 	// AudioSource참고
-	DBG("getNextAudioBlock");
 	if (readerSource == nullptr)
 	{
 		bufferToFill.clearActiveBufferRegion();
@@ -71,7 +66,6 @@ void Audio::releaseResources()
 
     // For more details, see the help for AudioProcessor::releaseResources()
 	// AudioSource의 구현부. 아무래도 AudioSource를 확인해야할듯.
-	DBG("releaseResources");
 	transportSource.releaseResources();
 }
 
@@ -88,10 +82,8 @@ void Audio::SelectSong()
 	File file("/home/moca/coding/cpp/hyu/Song/test.wav");
 	AudioFormatReader *reader = formatManager.createReaderFor(file);
 	
-	DBG("띠용1");
 	if(reader != nullptr)
 	{
-		DBG("띠용2");
 		//ScopedPointer는 스마트 포인터 같은 개념
 		ScopedPointer<AudioFormatReaderSource> newSource = new AudioFormatReaderSource(reader,true);
 
@@ -110,7 +102,6 @@ void Audio::SelectSong()
 
 void Audio::changeState (TransportState newState)
 {
-	DBG("changeState called");
 	if (state != newState)
 	{
 		state = newState;
@@ -124,7 +115,6 @@ void Audio::changeState (TransportState newState)
 			case Starting:   
 				// start setSource로 설정되면 재생.
 				// 이 객체에 등록된 ChangeListener에 메시지를 보냄. 메시지를 보냄
-				DBG("Starting");
 				transportSource.start();
 				break;
 				
