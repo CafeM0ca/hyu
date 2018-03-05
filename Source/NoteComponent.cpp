@@ -62,6 +62,9 @@ void NoteComponent::paint (Graphics& g)
 
 	g.setColour(Colours::black);
 	g.setFont(60.0f);
+
+	//Rectanble을 만들어 상대적으로 접근할 필요가 있음. KeyComponent에도 마찬가지로
+	//입력효과를 줄때 필요함
 	g.drawText("D",getWidth()/12*4,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("F",getWidth()/12*5,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("J",getWidth()/12*6,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);

@@ -51,6 +51,14 @@ public:
 
 
 private:
+	int press_check;
+	enum checker{
+		d_pressed,
+		f_pressed,
+		j_pressed,
+		k_pressed,
+		unpressed
+	};
     //[UserVariables]   -- You can add your own custom variables in this section.
     //[/UserVariables]
 

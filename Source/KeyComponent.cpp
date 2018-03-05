@@ -27,7 +27,7 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-KeyComponent::KeyComponent ()
+KeyComponent::KeyComponent () :press_check(unpressed)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -57,10 +57,35 @@ void KeyComponent::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
+		
+	switch(press_check)
+	{
+		g.fillAll(Colours::blue);
+		case d_pressed:
+				g.fillRect(getWidth()/12*4,getHeight()/12*10.75,
+							getWidth()/12,getHeight()/12*0.25);	
+				press_check = unpressed;
+				break;
+		case f_pressed:
+				g.fillRect(getWidth()/12*5,getHeight()/12*10.75,
+							getWidth()/12,getHeight()/12*0.25);	
+				press_check = unpressed;
+				break;
+		case j_pressed:
+				g.fillRect(getWidth()/12*6,getHeight()/12*10.75,
+							getWidth()/12,getHeight()/12*0.25);	
+				press_check = unpressed;
+				break;
+		case k_pressed:
+				g.fillRect(getWidth()/12*7,getHeight()/12*10.75,
+							getWidth()/12,getHeight()/12*0.25);	
+				press_check = unpressed;
+				break;
 
+	}
+}
 
 //[/UserPaint]
-}
 
 void KeyComponent::resized()
 {
@@ -77,16 +102,20 @@ bool KeyComponent::keyPressed (const KeyPress& key)
 	switch(key.getTextCharacter()){
 		case 'd':
 			DBG("d pressed");
+			press_check = d_pressed;
 			break;
 		case 'f':
 			DBG("f pressed");
+			press_check = f_pressed;
 			break;
 		case 'j':
 			DBG("j pressed");
+			press_check = j_pressed;
 			//
 			break;
 		case 'k':
 			DBG("k pressed");
+			press_check = k_pressed;
 			break;
 	}
     return false;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
