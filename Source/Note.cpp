@@ -71,8 +71,9 @@ void Note::DownNote(){
 	cnt++;
 }
 
-
+/*
 void Note::run() 
 {
 
 }
+*/

@@ -12,7 +12,7 @@
 //==============================================================================
 /*
 */
-class Note    : public Component, public Thread 
+class Note    : public Component//, public Thread 
 {
 public:
     Note();
@@ -26,7 +26,7 @@ public:
 	inline float GetY2() const { return y2; }
 	inline float GetSpeed() const { return speed; }
 	void DownNote();
-	void run() override;	
+//	void run() override;	
 private:
 	//static const char* bono_png;
 	//tatic const int bono_pngSize;
