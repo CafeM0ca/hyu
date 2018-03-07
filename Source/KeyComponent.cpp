@@ -1,6 +1,5 @@
 /*
-  ==============================================================================
-
+  ============================================================================== 
   This is an automatically generated GUI class created by the Projucer!
 
   Be careful when adding custom code to these files, as only the code within
@@ -24,8 +23,7 @@
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-//[/MiscUserDefs]
-
+//[/MiscUserDefs] 
 //==============================================================================
 KeyComponent::KeyComponent () :press_check(unpressed)
 {
@@ -57,28 +55,30 @@ void KeyComponent::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
-		
 	switch(press_check)
 	{
-		g.fillAll(Colours::blue);
 		case d_pressed:
-				g.fillRect(getWidth()/12*4,getHeight()/12*10.75,
-							getWidth()/12,getHeight()/12*0.25);	
+				g.setColour(Colours::pink);
+				g.fillRect(getWidth()/12*4+3,getHeight()/12*10.69,
+							getWidth()/12-6,getHeight()/12*0.32);	
 				press_check = unpressed;
 				break;
 		case f_pressed:
-				g.fillRect(getWidth()/12*5,getHeight()/12*10.75,
-							getWidth()/12,getHeight()/12*0.25);	
+				g.setColour(Colours::pink);
+				g.fillRect(getWidth()/12*5+3,getHeight()/12*10.69,
+							getWidth()/12-6,getHeight()/12*0.32);	
 				press_check = unpressed;
 				break;
 		case j_pressed:
-				g.fillRect(getWidth()/12*6,getHeight()/12*10.75,
-							getWidth()/12,getHeight()/12*0.25);	
+				g.setColour(Colours::pink);
+				g.fillRect(getWidth()/12*6+3,getHeight()/12*10.69,
+							getWidth()/12-6,getHeight()/12*0.32);	
 				press_check = unpressed;
 				break;
 		case k_pressed:
-				g.fillRect(getWidth()/12*7,getHeight()/12*10.75,
-							getWidth()/12,getHeight()/12*0.25);	
+				g.setColour(Colours::pink);
+				g.fillRect(getWidth()/12*7+3,getHeight()/12*10.69,
+							getWidth()/12-6,getHeight()/12*0.32);	
 				press_check = unpressed;
 				break;
 

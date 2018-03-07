@@ -11,7 +11,12 @@ MainComponent::MainComponent()
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (1280,1080);
-    setFramesPerSecond (120); // This sets the frequency of the update calls.
+    setFramesPerSecond (100); // This sets the frequency of the update calls.
+
+
+	//쓰레드로 분리해야함..? 
+	// keycomponent가 pressed를 보내면 
+	// notecomponent가 addListener등록하고 신호받아야함
     addAndMakeVisible(notecomponent);
     addAndMakeVisible(keycomponent);
 }

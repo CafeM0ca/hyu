@@ -46,18 +46,26 @@ void NoteComponent::paint (Graphics& g)
     nframe3.setBounds(getWidth()/12*6,0,getWidth()/12,getHeight());   
     nframe4.setBounds(getWidth()/12*7,0,getWidth()/12,getHeight());   
 	nframe5.setBounds(getWidth()/12*4,getHeight()/12*11,getWidth()/12*4,getHeight());
-    nframe6.setBounds(getWidth()/12*4,getHeight()/12*10.75,getWidth()/12*4,getHeight()); //판정 포인트 0.25
+    nframe6.setBounds(getWidth()/12*4,getHeight()/12*10.65,getWidth()/12*4,getHeight()); //판정 포인트 0.25
 	
 	//note  
-	DBG("draw note");
+	//DBG("draw note");
 	block1.setBounds(getWidth()/12*4+3,0,getWidth()/12-6,getHeight()/12*11);
 	block2.setBounds(getWidth()/12*5+3,0,getWidth()/12-6,getHeight()/12*11);
 	block3.setBounds(getWidth()/12*6+3,0,getWidth()/12-6,getHeight()/12*11);
 	block4.setBounds(getWidth()/12*7+3,0,getWidth()/12-6,getHeight()/12*11);
-	/*
-	block2.setBounds(getWidth()/12*5,block2.GetY1(),getWidth()/12,block2.GetY2());
-	block3.setBounds(getWidth()/12*6,block3.GetY1(),getWidth()/12,block3.GetY2());
-	block4.setBounds(getWidth()/12*7,block4.GetY1(),getWidth()/12,block4.GetY2());
+/*
+	for(int i=0;i<block1.GetSpeed();i++)
+	{
+		block1.repaint();
+		block2.repaint();
+//		block3.repaint();
+//		block4.repaint();
+	}
+	for(int i=0;i<1;i++){
+		block3.repaint();
+		block4.repaint();
+	}
 	*/
 
 	g.setColour(Colours::black);
@@ -69,6 +77,7 @@ void NoteComponent::paint (Graphics& g)
 	g.drawText("F",getWidth()/12*5,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("J",getWidth()/12*6,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("K",getWidth()/12*7,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
+
 }
 
 void NoteComponent::resized()

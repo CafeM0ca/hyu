@@ -9,11 +9,10 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
 //==============================================================================
 /*
 */
-class Note    : public Component
+class Note    : public Component, public Thread 
 {
 public:
     Note();
@@ -27,9 +26,11 @@ public:
 	inline float GetY2() const { return y2; }
 	inline float GetSpeed() const { return speed; }
 	void DownNote();
+	void run() override;	
 private:
 	//static const char* bono_png;
 	//tatic const int bono_pngSize;
+	
 	void DoubleBufferfing() const;
 	int cnt;
 	float x1,x2,y1,y2;
