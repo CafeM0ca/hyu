@@ -51,6 +51,11 @@ public:
 
 
 private:
+    //[UserVariables]   -- You can add your own custom variables in this section.
+    //[/UserVariables]
+
+    //==============================================================================
+
 	int press_check;
 	enum checker{
 		d_pressed,
@@ -59,11 +64,6 @@ private:
 		k_pressed,
 		unpressed
 	};
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
-    //==============================================================================
-
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
