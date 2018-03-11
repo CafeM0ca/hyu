@@ -21,6 +21,7 @@ NoteComponent::NoteComponent()
     addAndMakeVisible(nframe4);
     addAndMakeVisible(nframe5);
     addAndMakeVisible(nframe6);
+	//NoteThread하나로 다 바꾸고 NoteThread에서 큐로 관리함
     addAndMakeVisible(block1);
     addAndMakeVisible(block2);
     addAndMakeVisible(block3);
@@ -50,6 +51,7 @@ void NoteComponent::paint (Graphics& g)
 	
 	//note  
 	//DBG("draw note");
+	//이하 동문 
 	block1.setBounds(getWidth()/12*4+3,0,getWidth()/12-6,getHeight()/12*11);
 	block2.setBounds(getWidth()/12*5+3,0,getWidth()/12-6,getHeight()/12*11);
 	block3.setBounds(getWidth()/12*6+3,0,getWidth()/12-6,getHeight()/12*11);
@@ -62,11 +64,11 @@ void NoteComponent::paint (Graphics& g)
 //		block3.repaint();
 //		block4.repaint();
 	}
-	for(int i=0;i<1;i++){
+	*/
+	for(int i=0;i<block3.GetSpeed();i++){
 		block3.repaint();
 		block4.repaint();
 	}
-	*/
 
 	g.setColour(Colours::black);
 	g.setFont(60.0f);

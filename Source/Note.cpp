@@ -10,7 +10,7 @@
 #include "Note.h"
 
 //==============================================================================
-Note::Note() :x1(0),x2(0),y1(-20),y2(0),speed(1)
+Note::Note() :x1(0),x2(0),y1(-20),y2(0),speed(10)
 {
 	cnt=0;
     // In your constructor, you should add any child components, and
@@ -23,10 +23,6 @@ Note::~Note()
 {
 }
 
-void Note::DoubleBufferfing() const{
-//	Graphics g;
-//	g.drawLine(0,)
-}
 
 void Note::paint (Graphics& g)
 {
@@ -71,9 +67,33 @@ void Note::DownNote(){
 	cnt++;
 }
 
-/*
-void Note::run() 
+
+NoteThread::NoteThread() :Thread("Note Thread")
+{
+	priority = 1;	
+}
+
+NoteThread::~NoteThread()
+{
+	stopThread(100);
+	startThread(priority);
+}
+
+void NoteThread::run() 
+{
+	while(!threadShouldExit()) //쓰레드가 끝나지 않았으면
+	{
+		wait(10);
+	}
+}
+
+NoteController::NoteController()
 {
 
 }
-*/
+
+NoteController::~NoteController()
+{
+
+}
+

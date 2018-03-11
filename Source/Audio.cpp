@@ -15,9 +15,8 @@ Audio::Audio() :state(Stopped)
 	formatManager.registerBasicFormats();       // [1]
 //	transportSource.addChangeListener(this);
 //	changeState(Playing);
-	SelectSong();
-	setAudioChannels (0, 2);
 //	SelectSong();
+	setAudioChannels (0, 2);
 }
 
 Audio::~Audio()
@@ -79,27 +78,27 @@ void Audio::resized()
 
 void Audio::SelectSong()
 {	
-	FileChooser chooser("select song",File::nonexistent,"*.wav");
-	if(chooser.browseForFileToOpen()){
-		File file(chooser.getResult());
-		AudioFormatReader *reader = formatManager.createReaderFor(file);
-		
-		if(reader != nullptr)
-		{
-			//ScopedPointer는 스마트 포인터 같은 개념
-			ScopedPointer<AudioFormatReaderSource> newSource = new AudioFormatReaderSource(reader,true);
+	DBG(File::getCurrentWorkingDirectory().getFullPathName());
 
-			/* setSource  삽입할 소스를 설정
-			 * 1 nullptr, 
-			 * 2 버퍼 읽을 사이즈, 
-			 * 3 백그라운드 버퍼읽기 쓰레드
-			 * 4 샘플의 재생속도. 0이면 조절안함 알아서 음정도 맞춰줌
-			 * 5 재생하는데 필요한 채널 수*/
-			transportSource.setSource(newSource,0,nullptr,reader->sampleRate);
-			readerSource = newSource.release();
-			changeState(Starting); // 파일 경로지정하고 다 셋팅한 후 Starting해야함.
-		}
+	File file("~/coding/cpp/hyu/Song/*.wav");
+	AudioFormatReader *reader = formatManager.createReaderFor(file);
+	
+	if(reader != nullptr)
+	{
+		//ScopedPointer는 스마트 포인터 같은 개념
+		ScopedPointer<AudioFormatReaderSource> newSource = new AudioFormatReaderSource(reader,true);
+
+		/* setSource  삽입할 소스를 설정
+		 * 1 nullptr, 
+		 * 2 버퍼 읽을 사이즈, 
+		 * 3 백그라운드 버퍼읽기 쓰레드
+		 * 4 샘플의 재생속도. 0이면 조절안함 알아서 음정도 맞춰줌
+		 * 5 재생하는데 필요한 채널 수*/
+		transportSource.setSource(newSource,0,nullptr,reader->sampleRate);
+		readerSource = newSource.release();
+		changeState(Starting); // 파일 경로지정하고 다 셋팅한 후 Starting해야함.
 	}
+
 }
  
 
