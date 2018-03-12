@@ -1,3 +1,5 @@
-# 시연회
+# Hyu is Rhythm Game.
 
-C++ GUI JUCE LIBRARY
+It programmed by C++ with JUCE Library
+
+after complete, I'll add more detail
