@@ -9,6 +9,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "Audio.h"
 //==============================================================================
 /*
 */
@@ -30,6 +31,7 @@ private:
 	int cnt;
 	float x1,x2,y1,y2;
 	float speed;
+	Colour colour;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Note)
 };
 
@@ -46,15 +48,40 @@ private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteThread)
 };
 
+class NoteThreadPoolJob : public Note, public ThreadPoolJob
+{ public:
+	NoteThreadPoolJob();
+	~NoteThreadPoolJob();
+	JobStatus runJob() override
+	{
+		Thread::sleep(30);
+		return jobNeedsRunningAgain;
+	}
+private:
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteThreadPoolJob)
+};
 
-class NoteController : public NoteThread, private Timer
+
+class NoteController : public Component//, private Timer
 {
 public:
 	NoteController();
 	~NoteController();
-
+	void resetNotes();
+	void paint(Graphics&) override;
+	void resized() override;
 private:
-	ThreadPool pool{4}; //
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteController)
-};
+	ThreadPool pool{3};
+	bool isUsingPool = false;
+	OwnedArray<Component> notes;
+	
+	Audio bgm;
+	void GenerateNote();
+	void setUsingPool(bool usepool);
+	void addNote();
+	void removeNote();
+	void StartGame();		
+	void LoadGame();
+	bool CheckingNoteMap();
+
 };

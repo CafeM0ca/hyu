@@ -27,7 +27,7 @@ void Map::paint (Graphics& g)
        You should replace everything in this method with your own
        drawing code..
     */
-    g.setColour(Colours::black);
+    g.setColour(Colour(255,133,51));
 
     g.drawRect(0,0,getWidth(),getHeight(),3);
 	

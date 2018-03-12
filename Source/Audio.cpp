@@ -2,21 +2,19 @@
   ==============================================================================
 
     This file was auto-generated!
-
-  ==============================================================================
-*/
+============================================================================== */
 
 #include "Audio.h"
 
 //==============================================================================
-Audio::Audio() :state(Stopped)
+Audio::Audio() :state(Stopped), file("~/coding/cpp/hyu/Song/test.wav")
 {
 	
 	formatManager.registerBasicFormats();       // [1]
-//	transportSource.addChangeListener(this);
-//	changeState(Playing);
-//	SelectSong();
-	setAudioChannels (0, 2);
+	//transportSource.addChangeListener(this);
+	changeState(Playing);
+	setAudioChannels (0, 2); 
+
 }
 
 Audio::~Audio()
@@ -80,14 +78,15 @@ void Audio::SelectSong()
 {	
 	DBG(File::getCurrentWorkingDirectory().getFullPathName());
 
-	File file("~/coding/cpp/hyu/Song/*.wav");
 	AudioFormatReader *reader = formatManager.createReaderFor(file);
-	
 	if(reader != nullptr)
 	{
+		//재생시간 
+		duration = reader->lengthInSamples / reader->sampleRate; 
+		
+
 		//ScopedPointer는 스마트 포인터 같은 개념
 		ScopedPointer<AudioFormatReaderSource> newSource = new AudioFormatReaderSource(reader,true);
-
 		/* setSource  삽입할 소스를 설정
 		 * 1 nullptr, 
 		 * 2 버퍼 읽을 사이즈, 

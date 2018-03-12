@@ -11,7 +11,6 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <queue>
 
 //==============================================================================
 /*
@@ -26,12 +25,12 @@ public:
     void paint (Graphics&) override;
     void resized() override;
 private:
-
 	int song_cnt;
 	Label before_song;
 	Label current_song;
 	Label after_song;
 	Label exit;
-	ColourGradient base_color;
+	
+		
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Menu)
 };

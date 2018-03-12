@@ -26,7 +26,9 @@ NoteComponent::NoteComponent()
     addAndMakeVisible(block2);
     addAndMakeVisible(block3);
     addAndMakeVisible(block4);
-	addAndMakeVisible(bgm);
+
+	addAndMakeVisible(note_controller);
+	DBG("safsdf");
 }
 
 NoteComponent::~NoteComponent()
@@ -49,14 +51,16 @@ void NoteComponent::paint (Graphics& g)
 	nframe5.setBounds(getWidth()/12*4,getHeight()/12*11,getWidth()/12*4,getHeight());
     nframe6.setBounds(getWidth()/12*4,getHeight()/12*10.65,getWidth()/12*4,getHeight()); //판정 포인트 0.25
 	
+	note_controller.setBounds(0,0,getWidth(),getHeight());
 	//note  
 	//DBG("draw note");
 	//이하 동문 
+	
 	block1.setBounds(getWidth()/12*4+3,0,getWidth()/12-6,getHeight()/12*11);
 	block2.setBounds(getWidth()/12*5+3,0,getWidth()/12-6,getHeight()/12*11);
 	block3.setBounds(getWidth()/12*6+3,0,getWidth()/12-6,getHeight()/12*11);
 	block4.setBounds(getWidth()/12*7+3,0,getWidth()/12-6,getHeight()/12*11);
-/*
+
 	for(int i=0;i<block1.GetSpeed();i++)
 	{
 		block1.repaint();
@@ -64,17 +68,19 @@ void NoteComponent::paint (Graphics& g)
 //		block3.repaint();
 //		block4.repaint();
 	}
-	*/
+
+
 	for(int i=0;i<block3.GetSpeed();i++){
 		block3.repaint();
 		block4.repaint();
 	}
 
-	g.setColour(Colours::black);
+	g.setColour(Colour(255,91,51));
 	g.setFont(60.0f);
 
 	//Rectanble을 만들어 상대적으로 접근할 필요가 있음. KeyComponent에도 마찬가지로
 	//입력효과를 줄때 필요함
+	g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
 	g.drawText("D",getWidth()/12*4,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("F",getWidth()/12*5,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);
 	g.drawText("J",getWidth()/12*6,getHeight()/11*10,getWidth()/12,getHeight()/11,Justification::centredBottom,true);

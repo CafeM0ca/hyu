@@ -36,17 +36,19 @@ public:
 		Playing,
 		Stopping
 	};
-
-
-private:
-    //==============================================================================
-    // Your private member variables go here...
+	inline int GetSongLength(double len) const
+	{
+		return static_cast<int>(len);
+	}
 	void changeState(TransportState newState);
+private:
     AudioFormatManager formatManager;
     ScopedPointer<AudioFormatReaderSource> readerSource;
     AudioTransportSource transportSource;
     TransportState state;
+	
+	File file;
 
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Audio)
+	double duration; 
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Audio)
 };

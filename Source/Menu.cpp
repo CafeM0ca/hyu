@@ -23,27 +23,29 @@ Menu::Menu()
 	addAndMakeVisible(current_song);
 	addAndMakeVisible(after_song);
 	addAndMakeVisible(exit);
+	/*
 	before_song.setText("Song1",dontSendNotification);
 	before_song.setColour(Label::textColourId,Colours::black);
 	before_song.setFont(Font(80.0f,Font::bold));
 	before_song.setJustificationType(Justification::centred);
-
-	current_song.setText("Song1",dontSendNotification);
+	*/
+	//current_song.setText(bgm.getSongName(),dontSendNotification);
+	//getFileNameWithoutExtension
+	current_song.setText("NCS",dontSendNotification);
 	current_song.setColour(Label::textColourId,Colours::black);
 	current_song.setFont(Font(80.0f,Font::bold));
 	current_song.setJustificationType(Justification::centred);
-
+	/*
 	after_song.setText("Song1",dontSendNotification);
 	after_song.setColour(Label::textColourId,Colours::black);
 	after_song.setFont(Font(80.0f,Font::bold));
 	after_song.setJustificationType(Justification::centred);
-
+	*/
 
 	exit.setText("exit",dontSendNotification);
 	exit.setJustificationType(Justification::centred);
 	exit.setColour(Label::textColourId,Colours::black);
 
-	base_color.addColour(0.33,Colour(159,255,128));
 }
 
 
@@ -58,8 +60,7 @@ void Menu::paint (Graphics& g)
 
        You should replace everything in this method with your own
        drawing code..
-    */
-
+    */ 
 /*
     g.setColour (Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
@@ -72,17 +73,14 @@ void Menu::paint (Graphics& g)
 */
 	// 블럭 색 미지정
 	// 뒷배경
-	g.setGradientFill(base_color);
+	g.setColour(Colour(159,255,128));
 	g.drawRect(0,0,450,getHeight());
 	g.fillRect(0,0,450,getHeight());
 
-	//getWidth()/20 == 96
-	DBG(getWidth()/15);
-	int high = 50;
 	g.setColour(Colours::violet);
 	g.setColour(Colours::darkviolet);
-	g.drawRoundedRectangle(0,getHeight()/6,450,getHeight()-getHeight()/6,20,10);
-	g.fillRoundedRectangle(Rectangle<float>(0,getHeight()/6,450,getHeight()-(getHeight()/6)),20);
+	g.drawRoundedRectangle(0,getHeight()/6,450,getHeight()-getHeight()/2,20,10);
+	g.fillRoundedRectangle(Rectangle<float>(0,getHeight()/6,450,getHeight()-getHeight()/2),20);
 
 	g.setColour(Colours::blue);
 	
