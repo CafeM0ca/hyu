@@ -32,41 +32,17 @@
 
     Describe your class and how it works here!
                                                                     //[/Comments]
-*/
-class KeyComponent  : public Component
+*/ 
+class HyuKeyListener : public KeyListener
 {
 public:
-    //==============================================================================
-    KeyComponent ();
-    ~KeyComponent();
-
-    //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
-    //[/UserMethods]
-
-    void paint (Graphics& g) override;
-    void resized() override;
-    bool keyPressed (const KeyPress& key) override;
-
-
-
+	~HyuKeyListener();
+	bool keyPressed(const KeyPress& key,Component *c) override;
+	bool keyStateChanged(bool isKeyDown,Component *c) override;
+	bool isPressed(); 
+	bool dkey=false,fkey=false,jkey=false,kkey=false;
 private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
-    //==============================================================================
-
-	int press_check;
-	enum checker{
-		d_pressed,
-		f_pressed,
-		j_pressed,
-		k_pressed,
-		unpressed
-	};
-
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
+	bool pressed_check=false;
 };
 
 //[EndFile] You can add extra defines here...

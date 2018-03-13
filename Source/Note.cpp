@@ -8,16 +8,12 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Note.h"
-
+#include <fstream>
 //==============================================================================
-Note::Note() :x1(0),x2(0),y1(-20),y2(0),speed(10)
+Note::Note():x1(3),x2(0),y1(-20),y2(0),speed(10)
 {
 	DBG("Note Ctor");
 	cnt=0;
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-//	cachedImage_bono = ImageCache::getFromMemoey(bono_png,bono_pngSize);
-//	setSize(110,100);
 	colour = Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f);
 }
 
@@ -26,36 +22,23 @@ Note::~Note()
 
 void Note::paint (Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-       You should replace everything in this method with your own
-       drawing code..
-    */
-	//g.drawRect(getWidth()/12,y1,getWidth(),y2);
-	//g.fillRect(getWidth()/12*3,y1,getWidth(),y2);
-	
+	DBG("hi");	
 	// 무지개 노트
 	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
 	g.setColour(colour);
-	g.drawLine(0,y1,getWidth(),y1,20);
+	g.drawLine(getWidth()/12*x1,y1,getWidth()/12*x1+getWidth()/12,y1,20);
 	DownNote();
-		//g.setColour (Colours::white);
-		//g.drawLine(0,y1-0.5,getWidth(),y2-0.5,25);
-//g.drawImage(cachedImage_bono,getWidth()/12*4,getHeight()/12*11,getWidth()/12*4,getHeight()),0,0,cachedImage_bono.getWidth(),cachedImage_bono.getHeight());
-//
 }
 
 void Note::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
 
 }
 
-//void Note::repaint(int x,int y,int width,int height) override
 
 void Note::DownNote(){
-	if(y1 < getHeight()/12*12)
+	DBG("DownNote");
+	if(y1 < getHeight()/12*12+10)
 	{
 		/* 노트 배속 공식
 		 */
@@ -64,12 +47,11 @@ void Note::DownNote(){
 	}
 	else
 	{
-		y1 = -20;
-		y2 = 0;
-	//	colour = Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f);
-
+		//노트를 만들 필요가 없어짐 
+		// 시그널을 보내 동적할당 해제해야함
 	}
 	cnt++;
+	DBG("repaint");
 	repaint();
 }
 
@@ -78,16 +60,18 @@ NoteThread::NoteThread() :Thread("Note Thread")
 {
 	DBG("NoteThread");
 	priority = 1;	
-	startThread(priority++);
+	startThread();
 }
 
 NoteThread::~NoteThread()
 {
 	stopThread(100);
+	DBG("delete thread");
 }
 
 void NoteThread::run() 
 {
+	DBG("run");
 	while(!threadShouldExit()) //쓰레드가 끝나지 않았으면
 	{
 		wait(10); //10ms cpu쉼. 원할하게 작동시키기위해 
@@ -95,39 +79,21 @@ void NoteThread::run()
 		const MessageManagerLock mml(Thread::getCurrentThread());
 		if(!mml.lockWasGained()) return;
 
+		DBG("DownNoteCall-run");
 		DownNote();
 	}
 }
-
-//NoteThreadPoolJob
-NoteThreadPoolJob::NoteThreadPoolJob() :ThreadPoolJob("MultiThread job")
-{
-	DBG("NoteThreadPoolJob ctor");
-}
-
-NoteThreadPoolJob::~NoteThreadPoolJob()
-{
-
-}
-
-
-
-
-
-
 
 
 
 
 
 //NoteController
-NoteController::NoteController()
+NoteController::NoteController() :sec(0)
 {
-	setOpaque(true);
-	DBG("NoteController");
-	bgm.SelectSong(); 
-	bgm.changeState(bgm.Stopping);
-	DBG("Stopped song");
+	addKeyListener(&keylistener);
+	setWantsKeyboardFocus(true);
+	bgm.changeState(bgm.Stopped);
 	LoadGame();
 }
 
@@ -138,62 +104,86 @@ NoteController::~NoteController()
 
 void NoteController::paint(Graphics& g)
 {
-	//범위 지정해야함
-	g.setColour(Colours::white);
 }
 
 void NoteController::resized()
 {
-
 }
 
 void NoteController::resetNotes()
 {
 	pool.removeAllJobs(true,4000);
-	notes.clear();
 }
 
-void NoteController::setUsingPool(bool usepool)
-{
-	isUsingPool = true;
-	resetNotes();
-}
 
 void NoteController::addNote()
 {
-	//큐에 노트를 넣음
-	if(isUsingPool)
+
+	if(keylistener.isPressed())
 	{
-		NoteThreadPoolJob *newNote = new NoteThreadPoolJob();
-		notes.add(newNote);
-		addAndMakeVisible(newNote);
-		pool.addJob(newNote,false);
-		DBG("isUsingPool");
-	}
-	else
-	{
-		NoteThread *newNote = new NoteThread();
-		notes.add(newNote);
-		addAndMakeVisible(newNote);
-		DBG("not isUsingPool");
+		DBG("key pressed");
+		if(keylistener.dkey == true)
+		{
+			NoteThread *nt = new NoteThread();
+			addAndMakeVisible(nt);
+			nt->setBounds(0,0,getWidth(),getHeight());
+			nt->setRange(nt->Range::d);
+			notes.add(nt);
+		}
+	else if(keylistener.fkey == true)
+		{
+			NoteThread *nt = new NoteThread();
+			addAndMakeVisible(nt);
+			nt->setBounds(0,0,getWidth(),getHeight());
+			nt->setRange(nt->Range::f);
+			notes.add(nt);
+		}
+	else if(keylistener.jkey == true)
+		{
+			NoteThread *nt = new NoteThread();
+			addAndMakeVisible(nt);
+			nt->setBounds(0,0,getWidth(),getHeight());
+			nt->setRange(nt->Range::j);
+			notes.add(nt);
+		}		
+	else if(keylistener.kkey == true)
+		{
+			NoteThread *nt = new NoteThread();
+			addAndMakeVisible(nt);
+			nt->setBounds(0,0,getWidth(),getHeight());
+			nt->setRange(nt->Range::k);
+			notes.add(nt);
+			
+		}	
 	}
 }
 
+
 void NoteController::removeNote()
-{
-	//큐를 비움
-}
+{	
+	for(int i=0;i<notes.size();i++)
+		notes.remove(i);	
+} 
 
 bool NoteController::CheckingNoteMap()
 {
 	//파일의 해당하는 맵이 있는지 찾는다.
+	std::ifstream hm("/home/moca/coding/cpp/hyu/Song/test.hm");
+	if(hm.is_open())
+	{
+		//찾음
+		DBG("file found");
+		return true;
+	}
+	else
+	{
+		//없음 파일 만들어야함.
+		DBG("file not found");
+		return false;
+	}
 }
-
 void NoteController::LoadGame()
 {
-	DBG("Start Song");
-	bgm.changeState(bgm.Stopped);
-	bgm.changeState(bgm.Playing);
 	//노트 맵이 있는지 체킹 
 	if(CheckingNoteMap())
 	{
@@ -208,12 +198,33 @@ void NoteController::LoadGame()
 
 void NoteController::GenerateNote()
 {
+	bgm.SelectSong();
+	startTimer(1);	//1sec = 1000ms
 	//음악 파일의 시간을 불러옴
 	//타이머 시작
-	//입력받음
-	//타이머 종료
-	
+	// * 키 포커스를 준다.
+	// * 누를떄마다 노트가 떨어지는걸 보여준다.
+	//j * 저장한다.
 	//중간저장? 나중에추가 
 	//맵을 저장할껀지 선택
 	//종료 
 }
+
+void NoteController::timerCallback()
+{
+	static int cnt = 0;
+	if(GetSec()+5 > bgm.GetSongLength(bgm.duration)*1000) //노래 길이 + 5sec  
+	{
+		DBG("노래 끝났습니다");
+		stopTimer();
+		sec = 0;
+	}
+	else
+	{
+		if(notes.size() < 6000){
+			addNote();				
+			DBG(cnt++);
+		}
+	}
+}
+

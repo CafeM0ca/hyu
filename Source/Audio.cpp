@@ -76,7 +76,6 @@ void Audio::resized()
 
 void Audio::SelectSong()
 {	
-	DBG(File::getCurrentWorkingDirectory().getFullPathName());
 
 	AudioFormatReader *reader = formatManager.createReaderFor(file);
 	if(reader != nullptr)
@@ -97,7 +96,6 @@ void Audio::SelectSong()
 		readerSource = newSource.release();
 		changeState(Starting); // 파일 경로지정하고 다 셋팅한 후 Starting해야함.
 	}
-
 }
  
 

@@ -15,8 +15,7 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class Audio   : public AudioAppComponent 
-{
+class Audio   : public AudioAppComponent {
 public:
     //==============================================================================
     Audio();
@@ -40,7 +39,12 @@ public:
 	{
 		return static_cast<int>(len);
 	}
+	inline TransportState GetState() const { return state; }
 	void changeState(TransportState newState);
+	inline String GetSongName() const { return file.getFileNameWithoutExtension(); }
+	inline String GetSongMap() const { return GetSongName()+".hm";	}
+	String GetSongData() { return file.loadFileAsString(); }
+	double duration; 
 private:
     AudioFormatManager formatManager;
     ScopedPointer<AudioFormatReaderSource> readerSource;
@@ -49,6 +53,5 @@ private:
 	
 	File file;
 
-	double duration; 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Audio)
 };

@@ -3,13 +3,10 @@
     Note.h
     Created: 22 Feb 2018 10:36:30pm
     Author:  moca
-  ==============================================================================
-*/
-
-#pragma once
-
+  ============================================================================== */ #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Audio.h"
+#include "KeyComponent.h"
 //==============================================================================
 /*
 */
@@ -27,6 +24,13 @@ public:
 	inline float GetY2() const { return y2; }
 	inline float GetSpeed() const { return speed; }
 	void DownNote();
+	inline void setRange(int x) { x1 = x; }
+
+	enum Range
+	{
+		d=4,f,j,k
+	};
+
 private:
 	int cnt;
 	float x1,x2,y1,y2;
@@ -48,6 +52,8 @@ private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteThread)
 };
 
+
+/*
 class NoteThreadPoolJob : public Note, public ThreadPoolJob
 { public:
 	NoteThreadPoolJob();
@@ -55,14 +61,21 @@ class NoteThreadPoolJob : public Note, public ThreadPoolJob
 	JobStatus runJob() override
 	{
 		Thread::sleep(30);
+		const MessageManagerLock mml(this);
+		if(mml.lockWasGained())
+		{
+			DBG("lock down");
+			DownNote();
+
+		}
 		return jobNeedsRunningAgain;
 	}
 private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteThreadPoolJob)
 };
 
-
-class NoteController : public Component//, private Timer
+*/
+class NoteController : public Component, private Timer
 {
 public:
 	NoteController();
@@ -70,18 +83,26 @@ public:
 	void resetNotes();
 	void paint(Graphics&) override;
 	void resized() override;
+	inline int GetSec() { return sec++; }
 private:
-	ThreadPool pool{3};
-	bool isUsingPool = false;
+	ThreadPool pool{4};
 	OwnedArray<Component> notes;
-	
+	int sec;	
 	Audio bgm;
+	HyuKeyListener keylistener;
 	void GenerateNote();
-	void setUsingPool(bool usepool);
 	void addNote();
 	void removeNote();
 	void StartGame();		
 	void LoadGame();
 	bool CheckingNoteMap();
+	void timerCallback() override;	
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteController)
 
 };
+
+typedef struct 
+{
+	int sec;
+	int line;
+}mapdata;

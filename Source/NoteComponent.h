@@ -30,11 +30,12 @@ private:
     Map nframe4;
     Map nframe5;
     Map nframe6;
-
+/*
     Note block1;
     Note block2;
     Note block3;
     Note block4;
+	*/
 	NoteController note_controller;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteComponent)
 };

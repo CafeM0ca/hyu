@@ -24,110 +24,76 @@
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 //[/MiscUserDefs] 
-//==============================================================================
-KeyComponent::KeyComponent () :press_check(unpressed)
+//============================================================================== 
+HyuKeyListener::~HyuKeyListener()
 {
-    //[Constructor_pre] You can add your own custom stuff here..
-    //[/Constructor_pre]
 
-
-    //[UserPreSize]
-    //[/UserPreSize]
-	setWantsKeyboardFocus(true);
-
-    //[Constructor] You can add your own custom stuff here..
-    //[/Constructor]
 }
 
-KeyComponent::~KeyComponent()
+bool HyuKeyListener::keyPressed(const KeyPress& key,Component *c)
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
-
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
-}
-
-//==============================================================================
-void KeyComponent::paint (Graphics& g)
-{
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-	switch(press_check)
-	{
-		case d_pressed:
-				g.setColour(Colours::pink);
-				g.fillRect(getWidth()/12*4+3,getHeight()/12*10.69,
-							getWidth()/12-6,getHeight()/12*0.32);	
-				press_check = unpressed;
-				break;
-		case f_pressed:
-				g.setColour(Colours::pink);
-				g.fillRect(getWidth()/12*5+3,getHeight()/12*10.69,
-							getWidth()/12-6,getHeight()/12*0.32);	
-				press_check = unpressed;
-				break;
-		case j_pressed:
-				g.setColour(Colours::pink);
-				g.fillRect(getWidth()/12*6+3,getHeight()/12*10.69,
-							getWidth()/12-6,getHeight()/12*0.32);	
-				press_check = unpressed;
-				break;
-		case k_pressed:
-				g.setColour(Colours::pink);
-				g.fillRect(getWidth()/12*7+3,getHeight()/12*10.69,
-							getWidth()/12-6,getHeight()/12*0.32);	
-				press_check = unpressed;
-				break;
-
-	}
-}
-
-//[/UserPaint]
-
-void KeyComponent::resized()
-{
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
-}
-
-bool KeyComponent::keyPressed (const KeyPress& key)
-{
-    //[UserCode_keyPressed] -- Add your code here...
+	pressed_check = true;
+	DBG("when..");
 	switch(key.getTextCharacter()){
 		case 'd':
+			dkey = true;
 			DBG("d pressed");
-			press_check = d_pressed;
 			break;
 		case 'f':
+			fkey = true;
 			DBG("f pressed");
-			press_check = f_pressed;
 			break;
 		case 'j':
 			DBG("j pressed");
-			press_check = j_pressed;
+			jkey = true;
 			//
 			break;
 		case 'k':
+			kkey = true;
 			DBG("k pressed");
-			press_check = k_pressed;
 			break;
 	}
     return false;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
-    //[/UserCode_keyPressed]
 }
 
+bool HyuKeyListener::keyStateChanged(bool isKeyDown,Component *c)
+{
+	if(isKeyDown == true) //키가 눌리는 경우
+	{
+	DBG("he");	
+		if(dkey == true)
+		{
+			dkey = false;
+		}
+		else if(fkey == true)
+		{
 
+			fkey = false;
+		}
+		else if(jkey == true)
+		{
 
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//[/MiscUserCode]
+			jkey = false;
+		}
+		else if(kkey == true)
+		{
+			kkey = false;
 
+		}
+		return true;
+	}
+	else return false;
+}
 
+bool HyuKeyListener::isPressed()
+{
+	if(pressed_check == true)
+	{
+		pressed_check = false;
+		return true;
+	}
+	else return false;
+}
 //==============================================================================
 #if 0
 /*  -- Projucer information section --

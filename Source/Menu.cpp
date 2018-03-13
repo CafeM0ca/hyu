@@ -10,7 +10,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Menu.h"
-
 //==============================================================================
 //
 
@@ -31,7 +30,7 @@ Menu::Menu()
 	*/
 	//current_song.setText(bgm.getSongName(),dontSendNotification);
 	//getFileNameWithoutExtension
-	current_song.setText("NCS",dontSendNotification);
+	current_song.setText(song_name.GetSongName(),dontSendNotification);
 	current_song.setColour(Label::textColourId,Colours::black);
 	current_song.setFont(Font(80.0f,Font::bold));
 	current_song.setJustificationType(Justification::centred);

@@ -18,7 +18,7 @@ MainComponent::MainComponent()
 	// keycomponent가 pressed를 보내면 
 	// notecomponent가 addListener등록하고 신호받아야함
     addAndMakeVisible(notecomponent);
-    addAndMakeVisible(keycomponent);
+//    addAndMakeVisible(keycomponent);
 	addAndMakeVisible(menu);
 }
 
@@ -41,7 +41,7 @@ void MainComponent::paint (Graphics& g)
 //	g.setGradientFill(background_color);
 	g.fillAll(Colour(13,13,13));
     notecomponent.setBounds(0,0,getWidth(),getHeight());
-	keycomponent.setBounds(0,0,getWidth(),getHeight());
+//	keycomponent.setBounds(0,0,getWidth(),getHeight());
 	menu.setBounds(0,0,getWidth(),getHeight());
 }
 

@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
+#include "Audio.h"
 //==============================================================================
 /*
 */
@@ -30,7 +30,6 @@ private:
 	Label current_song;
 	Label after_song;
 	Label exit;
-	
-		
+	Audio song_name;	
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Menu)
 };
