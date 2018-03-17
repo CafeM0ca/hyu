@@ -1,5 +1,5 @@
 # Hyu is Rhythm Game.
 
-It programmed with C++ with JUCE Library
+It programmed C++ with JUCE Library
 
 after complete, I'll add more detail
