@@ -7,6 +7,6 @@ after complete, I'll add more detail.
 Maybe It will be complete before 2018 Desember :D
 
 
-hyu's concept is hands only on the keyboard. never using mouse.
+hyu's concept is hands only on the keyboard, not using mouse.
 Interface: Simple, Easy
-Play Style: Singleplay, Multiplay, Hardcore, using all most keyless keyboard
+Play Style: Singleplay, Multiplay, Hardcore, can use keboard arry fully. 
