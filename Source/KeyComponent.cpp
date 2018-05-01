@@ -15,16 +15,12 @@
 
   ==============================================================================
 */
-
-//[Headers] You can add your own extra header files here...
-//[/Headers]
-
 #include "KeyComponent.h"
 
+KeyComponent::KeyComponent()
+{
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
-//[/MiscUserDefs] 
-//============================================================================== 
+}
 KeyComponent::~KeyComponent()
 {
 

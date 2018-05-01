@@ -35,7 +35,7 @@
 */ 
 
 
-class KeyComponent : public KeyListener
+class KeyComponent : public Component
 {
 public:
 	~KeyComponent();
@@ -45,6 +45,7 @@ public:
 	//bool dkey=false,fkey=false,jkey=false,kkey=false;
 private:
 	KeyPress dkey,fkey,jkey,kkey; 
+	KeyPress menukey;
 };
 
 //[EndFile] You can add extra defines here...
