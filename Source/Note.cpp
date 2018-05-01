@@ -118,7 +118,7 @@ void NoteController::resetNotes()
 
 void NoteController::addNote()
 {
-
+/*
 	if(keylistener.isPressed())
 	{
 		DBG("key pressed");
@@ -156,6 +156,7 @@ void NoteController::addNote()
 			
 		}	
 	}
+	*/
 }
 
 
@@ -192,7 +193,7 @@ void NoteController::LoadGame()
 	else
 	{
 		//노트 생성 
-		GenerateNote();
+	//	GenerateNote();
 	}
 }
 

@@ -37,6 +37,9 @@ private:
     Note block4;
 	*/
 	NoteController note_controller;
+
+	KeyPress fuck;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteComponent)
 };
 

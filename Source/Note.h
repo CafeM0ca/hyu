@@ -6,7 +6,7 @@
   ============================================================================== */ #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Audio.h"
-#include "KeyComponent.h"
+//#include "KeyComponent.h"
 //==============================================================================
 /*
 */
@@ -89,7 +89,7 @@ private:
 	OwnedArray<Component> notes;
 	int sec;	
 	Audio bgm;
-	HyuKeyListener keylistener;
+	//KeyComponent keylistener;
 	void GenerateNote();
 	void addNote();
 	void removeNote();

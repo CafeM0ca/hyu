@@ -25,13 +25,15 @@
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 //[/MiscUserDefs] 
 //============================================================================== 
-HyuKeyListener::~HyuKeyListener()
+KeyComponent::~KeyComponent()
 {
 
 }
 
-bool HyuKeyListener::keyPressed(const KeyPress& key,Component *c)
+bool KeyComponent::keyPressed(const KeyPress& key,Component *c)
 {
+	DBG("KeyPressed");
+	/*
 	pressed_check = true;
 	DBG("when..");
 	switch(key.getTextCharacter()){
@@ -53,11 +55,14 @@ bool HyuKeyListener::keyPressed(const KeyPress& key,Component *c)
 			DBG("k pressed");
 			break;
 	}
+	*/
     return false;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
 }
 
-bool HyuKeyListener::keyStateChanged(bool isKeyDown,Component *c)
+bool KeyComponent::keyStateChanged(bool isKeyDown,Component *c)
 {
+	DBG("setWantsKeyboardFocus");
+	/*
 	if(isKeyDown == true) //키가 눌리는 경우
 	{
 	DBG("he");	
@@ -82,18 +87,20 @@ bool HyuKeyListener::keyStateChanged(bool isKeyDown,Component *c)
 		}
 		return true;
 	}
-	else return false;
+	else*/ return false;
 }
 
-bool HyuKeyListener::isPressed()
+bool KeyComponent::isPressed()
 {
+	/*
 	if(pressed_check == true)
 	{
 		pressed_check = false;
 		return true;
 	}
-	else return false;
+	else */return false;
 }
+
 //==============================================================================
 #if 0
 /*  -- Projucer information section --

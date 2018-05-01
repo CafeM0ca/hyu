@@ -33,16 +33,18 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */ 
-class HyuKeyListener : public KeyListener
+
+
+class KeyComponent : public KeyListener
 {
 public:
-	~HyuKeyListener();
+	~KeyComponent();
 	bool keyPressed(const KeyPress& key,Component *c) override;
 	bool keyStateChanged(bool isKeyDown,Component *c) override;
 	bool isPressed(); 
-	bool dkey=false,fkey=false,jkey=false,kkey=false;
+	//bool dkey=false,fkey=false,jkey=false,kkey=false;
 private:
-	bool pressed_check=false;
+	KeyPress dkey,fkey,jkey,kkey; 
 };
 
 //[EndFile] You can add extra defines here...
