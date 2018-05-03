@@ -18,35 +18,16 @@
 */
 
 #pragma once
-
-//[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
-//[/Headers]
-
-
-
-//==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Projucer.
-
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/ 
-
 
 class KeyComponent : public Component
 {
 public:
+	KeyComponent();
 	~KeyComponent();
-	bool keyPressed(const KeyPress& key,Component *c) override;
-	bool keyStateChanged(bool isKeyDown,Component *c) override;
-	bool isPressed(); 
-	//bool dkey=false,fkey=false,jkey=false,kkey=false;
+	bool keyPressed(const KeyPress& key) override;
 private:
-	KeyPress dkey,fkey,jkey,kkey; 
-	KeyPress menukey;
+	KeyPress dkey,fkey,jkey,kkey;
+	KeyPress tabkey,qkey,wkey; 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]

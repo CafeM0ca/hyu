@@ -1,13 +1,12 @@
 #include "MainComponent.h"
-
 MainComponent::MainComponent()
 {
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (1980,1280);
 
-
-	//쓰레드로 분리해야함..? 
+	addAndMakeVisible(keycomponent);
+//쓰레드로 분리해야함..? 
 	// keycomponent가 pressed를 보내면 
 	// notecomponent가 addListener등록하고 신호받아야함
     addAndMakeVisible(notecomponent);

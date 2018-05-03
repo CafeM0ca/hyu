@@ -91,8 +91,8 @@ void NoteThread::run()
 //NoteController
 NoteController::NoteController() :sec(0)
 {
-	addKeyListener(&keylistener);
-	setWantsKeyboardFocus(true);
+//	addKeyListener(&keylistener);
+//	setWantsKeyboardFocus(true);
 	bgm.changeState(bgm.Stopped);
 	LoadGame();
 }

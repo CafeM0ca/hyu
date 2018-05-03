@@ -17,84 +17,65 @@
 */
 #include "KeyComponent.h"
 
-KeyComponent::KeyComponent()
-{
+KeyComponent::KeyComponent() : dkey('d'),fkey('f'),jkey('j'),kkey('k'),qkey('q'),wkey('w'),tabkey(KeyPress::tabKey)
 
+{
+	setWantsKeyboardFocus(true);
 }
 KeyComponent::~KeyComponent()
 {
-
 }
 
-bool KeyComponent::keyPressed(const KeyPress& key,Component *c)
+bool KeyComponent::keyPressed(const KeyPress& key)
 {
-	DBG("KeyPressed");
-	/*
-	pressed_check = true;
-	DBG("when..");
-	switch(key.getTextCharacter()){
-		case 'd':
-			dkey = true;
-			DBG("d pressed");
-			break;
-		case 'f':
-			fkey = true;
-			DBG("f pressed");
-			break;
-		case 'j':
-			DBG("j pressed");
-			jkey = true;
-			//
-			break;
-		case 'k':
-			kkey = true;
-			DBG("k pressed");
-			break;
-	}
-	*/
-    return false;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
-}
+	if(key == dkey){
+		if(fkey.isCurrentlyDown() && jkey.isCurrentlyDown() && kkey.isCurrentlyDown()){ //3키 
+		
+		} else if(fkey.isCurrentlyDown() && jkey.isCurrentlyDown()){ //d f j
 
-bool KeyComponent::keyStateChanged(bool isKeyDown,Component *c)
-{
-	DBG("setWantsKeyboardFocus");
-	/*
-	if(isKeyDown == true) //키가 눌리는 경우
-	{
-	DBG("he");	
-		if(dkey == true)
-		{
-			dkey = false;
-		}
-		else if(fkey == true)
-		{
+		} else if(fkey.isCurrentlyDown() && kkey.isCurrentlyDown()){ //d f k
 
-			fkey = false;
-		}
-		else if(jkey == true)
-		{
+		} else if(jkey.isCurrentlyDown() && kkey.isCurrentlyDown()){ //d j k
 
-			jkey = false;
-		}
-		else if(kkey == true)
-		{
-			kkey = false;
+		} else if(fkey.isCurrentlyDown()){ //d f
+
+		} else if(jkey.isCurrentlyDown()){ //d j 
+
+		} else if(kkey.isCurrentlyDown()){ //d k 
+
+		} else{ // d
 
 		}
-		return true;
-	}
-	else*/ return false;
-}
+	} if(key == fkey){
+		if(dkey.isCurrentlyDown() && jkey.isCurrentlyDown() && kkey.isCurrentlyDown()){ //3키 
+		
+		} else if(dkey.isCurrentlyDown() && jkey.isCurrentlyDown()){ //f d j
 
-bool KeyComponent::isPressed()
-{
-	/*
-	if(pressed_check == true)
-	{
-		pressed_check = false;
-		return true;
-	}
-	else */return false;
+		} else if(dkey.isCurrentlyDown() && kkey.isCurrentlyDown()){ //f d k
+
+		} else if(jkey.isCurrentlyDown() && kkey.isCurrentlyDown()){ //f j k
+
+		} else if(dkey.isCurrentlyDown()){ //f f
+
+		} else if(jkey.isCurrentlyDown()){ //f j 
+
+		} else if(kkey.isCurrentlyDown()){ //f k 
+
+		} else{ // f
+
+		}
+	} 
+	else if(key == qkey){
+		DBG("qkey press");
+	} else if(key == wkey){
+		DBG("wkey press");
+	} else if(key == tabkey){
+		DBG("tabkey press");
+	} 
+	else
+		return false;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
+
+	return true;
 }
 
 //==============================================================================
