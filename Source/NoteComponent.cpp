@@ -15,12 +15,6 @@ NoteComponent::NoteComponent()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-    addAndMakeVisible(nframe1);
-    addAndMakeVisible(nframe2);
-    addAndMakeVisible(nframe3);
-    addAndMakeVisible(nframe4);
-    addAndMakeVisible(nframe5);
-    addAndMakeVisible(nframe6);
 	//NoteThread하나로 다 바꾸고 NoteThread에서 큐로 관리함
 	
 	addAndMakeVisible(note_controller);
@@ -39,12 +33,12 @@ void NoteComponent::paint (Graphics& g)
     jk*/
 	//map frame
 	g.setColour(Colours::black);
-    nframe1.setBounds(getWidth()/12*4,0,getWidth()/12,getHeight());   
-    nframe2.setBounds(getWidth()/12*5,0,getWidth()/12,getHeight());   
-    nframe3.setBounds(getWidth()/12*6,0,getWidth()/12,getHeight());   
-    nframe4.setBounds(getWidth()/12*7,0,getWidth()/12,getHeight());   
-	nframe5.setBounds(getWidth()/12*4,getHeight()/12*11,getWidth()/12*4,getHeight());
-    nframe6.setBounds(getWidth()/12*4,getHeight()/12*10.5f,getWidth()/12*4,getHeight()); //판정 포인트 0.25
+//    nframe1.setBounds(getWidth()/12*4,0,getWidth()/12,getHeight());   
+   // nframe2.setBounds(getWidth()/12*5,0,getWidth()/12,getHeight());   
+   // nframe3.setBounds(getWidth()/12*6,0,getWidth()/12,getHeight());   
+   // nframe4.setBounds(getWidth()/12*7,0,getWidth()/12,getHeight());   
+//	nframe5.setBounds(getWidth()/12*4,getHeight()/12*11,getWidth()/12*4,getHeight());
+  //  nframe6.setBounds(getWidth()/12*4,getHeight()/12*10.5f,getWidth()/12*4,getHeight()); //판정 포인트 0.25
 	
 	note_controller.setBounds(0,0,getWidth(),getHeight());
 /*	

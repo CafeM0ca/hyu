@@ -10,7 +10,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Note.h"
-#include "Map.h"
+//#include "Map.h"
 //==============================================================================
 /*
 */
@@ -24,12 +24,14 @@ public:
     void resized() override;
 
 private:
+	/*
     Map nframe1;
     Map nframe2;
     Map nframe3;
     Map nframe4;
     Map nframe5;
     Map nframe6;
+	*/
 /*
     Note block1;
     Note block2;
