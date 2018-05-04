@@ -1,20 +1,18 @@
-# Hyu is Rhythm Game.
+# Hyu(임시 이름)은 "두 손은 키보드에"라는 철학을 갖고 탄생한 리듬게임입니다.
 
-It programmed C++ with JUCE Library
+저는 노트북에 리눅스 운영체제를 사용하고 있습니다. 
+_결코 돈이 없어서 그렇습니다. ^^_
 
+**저도 친구들처럼 콘솔게임 하고싶은데 지원을 안해서 직접 만들어 하기위해 시작한 프로젝트입니다**.
+> 일단은 무료입니다. 2018년안에  '그럴싸하게' 만드는게 목표입니다.
+#### 모든 노래는 저작권이 풀려있는 노래와 작곡가의 허락을 맡은 곡들, 그리고 개인이 구매한 노래에 대해서만 지원합니다. 
 
-Platform: first Linux, second Windows, third MacOS
+##### 지원하는 운영체제
+	+ Linux 
+	+ Windows 7 이상
+	+ Mac OS
 
-after complete, I'll add more detail.
+##### 개발 환경
+* C++ JUCE 라이브러리
 
-
-Maybe It will be complete before 2018 Desember :D
-
-
-hyu's concept is no using mouse.
-
-
-Interface: Simple, Easy
-
-
-Play Style: Singleplay, Multiplay, Hardcore, can use keboard arry fully. 
+모든 저작권은 Jinyoung Kim(M0ca)에게 있습니다.  **오픈소스라고 그냥 가져다 쓰면 안되는거 알죠?ㅎㅎ**
