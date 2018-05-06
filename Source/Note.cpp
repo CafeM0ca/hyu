@@ -42,8 +42,8 @@ void Note::SetNotePos(const Rectangle<float>& rect)
 
 void Note::DownNote(){
 	//DBG("DownNote");
-	if(block.getY() <= getHeight()/12*10.5){
-		block.setY(block.getY()+10);
+	if(block.getY() <= getHeight()/12*10.5+getHeight()/30){
+		block.setY(block.getY()+5);
 	}
 	else
 	{
