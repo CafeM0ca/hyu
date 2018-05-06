@@ -10,21 +10,38 @@
 #include "Map.h"
 
 //==============================================================================
-Map::Map() 
+Map::Map() : mode(MapMode::single)
 {   
-	// temporarily set map
-	ChangeMap();
+	DBG("map init");
 }
 
 Map::~Map()
 {
 
 }
+void Map::InitDefaultMap(int width,int height) 
+{
+	map_info.single = width/12;
+	ChangeMap();
+}
 
 void Map::paint (Graphics& g)
 {
 	
     g.setColour(Colour(255,133,51));
+	switch(mode){
+			case MapMode::single:
+				vertical1.setBounds(map_info.single*4,-10,map_info.single,getHeight()+10);   
+				vertical2.setBounds(map_info.single*5,-10,map_info.single,getHeight()+10);   
+				vertical3.setBounds(map_info.single*6,-10,map_info.single,getHeight()+10);   
+				vertical4.setBounds(map_info.single*7,-10,map_info.single,getHeight()+10);   
+		
+				urteil.setBounds(map_info.single*4,getHeight()/12*10.5,map_info.single*4,getHeight()/30);
+				key_frame1.setBounds(map_info.single*4,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+				key_frame2.setBounds(map_info.single*5,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+				key_frame3.setBounds(map_info.single*6,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+				key_frame4.setBounds(map_info.single*7,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+		}
 	g.drawRect(vertical1,2.0f);
 	g.drawRect(vertical2,2.0f);
 	g.drawRect(vertical3,2.0f);
@@ -53,20 +70,33 @@ void Map::resized()
 	//
 }
 
-void Map::ChangeMap(MapMode mode /*MapMode::single*/) 
+void Map::ChangeMap( /*MapMode::single*/) 
 {
+	//mode = m;
   	switch(mode){
 		case MapMode::single:
-			vertical1.setBounds(getWidth()/12*4,-10,getWidth()/12,getHeight()+10);   
-			vertical2.setBounds(getWidth()/12*5,-10,getWidth()/12,getHeight()+10);   
-			vertical3.setBounds(getWidth()/12*6,-10,getWidth()/12,getHeight()+10);   
-			vertical4.setBounds(getWidth()/12*7,-10,getWidth()/12,getHeight()+10);   
+			vertical1.setBounds(map_info.single*4,-10,map_info.single,getHeight()+10);   
+			vertical2.setBounds(map_info.single*5,-10,map_info.single,getHeight()+10);   
+			vertical3.setBounds(map_info.single*6,-10,map_info.single,getHeight()+10);   
+			vertical4.setBounds(map_info.single*7,-10,map_info.single,getHeight()+10);   
 	
-			urteil.setBounds(getWidth()/12*4,getHeight()/12*10.5,getWidth()/12*4,getHeight()/30);
-			key_frame1.setBounds(getWidth()/12*4,getHeight()/12*10.5+getHeight()/30,getWidth()/12,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-			key_frame2.setBounds(getWidth()/12*5,getHeight()/12*10.5+getHeight()/30,getWidth()/12,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-			key_frame3.setBounds(getWidth()/12*6,getHeight()/12*10.5+getHeight()/30,getWidth()/12,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-			key_frame4.setBounds(getWidth()/12*7,getHeight()/12*10.5+getHeight()/30,getWidth()/12,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+			urteil.setBounds(map_info.single*4,getHeight()/12*10.5,map_info.single*4,getHeight()/30);
+			key_frame1.setBounds(map_info.single*4,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+			key_frame2.setBounds(map_info.single*5,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+			key_frame3.setBounds(map_info.single*6,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+			key_frame4.setBounds(map_info.single*7,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
 	}
 }
 
+Rectangle<float> Map::GetBaseRectangle()
+{
+	switch(mode){
+		case MapMode::single:
+			return Rectangle<float>(map_info.single*4,map_info.single*11,map_info.single,30);   
+	}
+}
+
+void Map::MapDataUpdate()
+{
+	map_info.single = getWidth() / 12;
+}
