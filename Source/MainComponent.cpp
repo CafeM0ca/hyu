@@ -3,7 +3,7 @@ MainComponent::MainComponent()
 {
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (1920,1080);
+    setSize (1080,720);
 	addAndMakeVisible(keycomponent);
 	addAndMakeVisible(note);
 	addAndMakeVisible(menu);

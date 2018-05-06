@@ -72,6 +72,7 @@ void Menu::paint (Graphics& g)
 */
 	// 블럭 색 미지정
 	// 뒷배경
+	/*
 	g.setColour(Colour(159,255,128));
 	g.drawRect(0,0,450,getHeight());
 	g.fillRect(0,0,450,getHeight());
@@ -86,6 +87,7 @@ void Menu::paint (Graphics& g)
 	g.setColour(Colours::red);
 	g.drawEllipse(getWidth()-50,0,50,50,3);
 	g.fillEllipse(getWidth()-50,0,50,50);
+	*/
 }
 
 void Menu::resized()

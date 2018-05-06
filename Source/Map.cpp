@@ -29,19 +29,7 @@ void Map::paint (Graphics& g)
 {
 	
     g.setColour(Colour(255,133,51));
-	switch(mode){
-			case MapMode::single:
-				vertical1.setBounds(map_info.single*4,-10,map_info.single,getHeight()+10);   
-				vertical2.setBounds(map_info.single*5,-10,map_info.single,getHeight()+10);   
-				vertical3.setBounds(map_info.single*6,-10,map_info.single,getHeight()+10);   
-				vertical4.setBounds(map_info.single*7,-10,map_info.single,getHeight()+10);   
-		
-				urteil.setBounds(map_info.single*4,getHeight()/12*10.5,map_info.single*4,getHeight()/30);
-				key_frame1.setBounds(map_info.single*4,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-				key_frame2.setBounds(map_info.single*5,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-				key_frame3.setBounds(map_info.single*6,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-				key_frame4.setBounds(map_info.single*7,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-		}
+	
 	g.drawRect(vertical1,2.0f);
 	g.drawRect(vertical2,2.0f);
 	g.drawRect(vertical3,2.0f);
