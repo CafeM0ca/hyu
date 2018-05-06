@@ -7,7 +7,6 @@ class Note    : public AnimatedAppComponent
 {
 public:
     Note();
-	Note(Rectangle<float> r);
     ~Note();
 	void update() override;
     void paint (Graphics&) override;
@@ -16,8 +15,10 @@ public:
 
 	void AddNote(const Rectangle<float>& rect);
 	void SetNotePos(const Rectangle<float>& rect);
+	//getMillisecondsSinceLastUpdate() update호출한수
 private:
 	Rectangle<float> block;
+	unsigned int bpm;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Note)
 };
 
