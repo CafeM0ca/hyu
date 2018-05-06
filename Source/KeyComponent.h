@@ -1,32 +1,33 @@
 /*
   ==============================================================================
-    KeyComponent.h
-    Created: 24 Feb 2018 6:38:12pm
-    Author:  moca
+
+  This is an automatically generated GUI class created by the Projucer!
+
+  Be careful when adding custom code to these files, as only the code within
+  the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
+  and re-saved.
+
+  Created with Projucer version: 5.2.1
+
+  ------------------------------------------------------------------------------
+
+  The Projucer is part of the JUCE library.
+  Copyright (c) 2017 - ROLI Ltd.
+
   ==============================================================================
 */
 
 #pragma once
-
 #include "../JuceLibraryCode/JuceHeader.h"
-//==============================================================================
-/*
-*/
 
-class KeyComponent    : public Component
+class KeyComponent : public Component
 {
 public:
-    KeyComponent();
-    ~KeyComponent();
-
-    void paint (Graphics&) override;
-    void resized() override;
-
-	//originatingComponent key이벤트를 받을 컴포넌트 
-	bool KeyListener::keyPressed(const KeyPress& key,
-			Component *originatingComponent) override;
+	KeyComponent();
+	~KeyComponent();
+	bool keyPressed(const KeyPress& key) override;
 private:
-	KeyPress key;
+	KeyPress dkey,fkey,jkey,kkey;
+	KeyPress tabkey,qkey,wkey; 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
 };
-

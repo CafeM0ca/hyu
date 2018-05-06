@@ -1,46 +1,58 @@
-/*
-  ==============================================================================
-    Note.cpp
-    Created: 22 Feb 2018 10:36:30pm
-    Author:  moca
-  ==============================================================================
-*/
-
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Note.h"
 
-//==============================================================================
 Note::Note()
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-//	cachedImage_bono = ImageCache::getFromMemoey(bono_png,bono_pngSize);
-//	setSize(110,100);
+	setFramesPerSecond(60);
 }
-
-Note::~Note()
+Note::Note(Rectangle<float> r) 
 {
+	DBG("initialize");
+}
+Note::~Note()
+{ 
+
+} 
+
+void Note::update()
+{
+
 }
 
 void Note::paint (Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-       You should replace everything in this method with your own
-       drawing code..
-    */
-    g.setColour (Colours::black);
-//	g.drawRect(getWidth()/12*4,0,getWidth()/getWidth()/12*4,getHeight()/12*11);
-//	g.fillRect(getWidth()/12*4,0,getWidth()/getWidth()/12*4,getHeight()/12*11);
-	g.drawRect(0,0,100,50);
-	g.fillRect(0,0,100,50);
-
-//g.drawImage(cachedImage_bono,getWidth()/12*4,getHeight()/12*11,getWidth()/12*4,getHeight()),0,0,cachedImage_bono.getWidth(),cachedImage_bono.getHeight());
+	// 무지개 노트
+	g.fillAll(Colour(13,13,13));
+	
+	g.setColour(Colours::red);
+//	g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
+	g.fillRect(block);
+	DownNote();
 }
 
 void Note::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+
+}
+
+void Note::SetNotePos(const Rectangle<float>& rect)
+{
+	block = rect;
+}
+
+void Note::DownNote(){
+	//DBG("DownNote");
+	if(block.getY() <= getHeight()/12*10.5){
+		block.setY(block.getY()+10);
+	}
+	else
+	{
+		block.setX(getWidth()/12 * Random::getSystemRandom().nextInt(Range<int>(4,8)));
+		block.setY(-10);
+	}
+}
+
+void Note::AddNote(const Rectangle<float>& rect)
+{
 
 }

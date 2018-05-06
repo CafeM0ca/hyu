@@ -1,45 +1,35 @@
-/*
-  ==============================================================================
-    This file was auto-generated!
-  ==============================================================================
-*/
-
 #include "MainComponent.h"
-//==============================================================================
-MainComponent::MainComponent()
+MainComponent::MainComponent() 
 {
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (1280,1080);
-//    setFramesPerSecond (60); // This sets the frequency of the update calls.
-	setFramesPerSecond(20);
-    addAndMakeVisible(notecomponent);
-    addAndMakeVisible(keycomponent);
+    setSize (1080,720);
+	addAndMakeVisible(keycomponent);
+	addAndMakeVisible(note);
+	addAndMakeVisible(menu);
+	addAndMakeVisible(map);
+	menu.setBounds(0,0,getWidth(),getHeight());
+	map.setBounds(0,0,getWidth(),getHeight());
+	map.InitDefaultMap(getWidth(),getHeight());
+	note.setBounds(0,0,getWidth(),getHeight());
+	note.SetNotePos(Rectangle<float>(map.GetBaseRectangle()));
+	//note.AddNote(Rectangle<float>(map.map_info.single*4,0,map.map_info.single*4,getHeight()));
 }
 
 MainComponent::~MainComponent()
 {
 }
 
-//==============================================================================
-void MainComponent::update()
-{
-    // This function is called at the frequency specified by the setFramesPerSecond() call
-    // in the constructor. You can use it to update counters, animate values, etc.
-}
-
-//==============================================================================
 void MainComponent::paint (Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(Colours::white);
-    notecomponent.setBounds(0,0,getWidth(),getHeight());
-	keycomponent.setBounds(0,0,getWidth(),getHeight());
+		
+	g.fillAll(Colour(13,13,13));
+	g.setColour(Colour(255,91,51));
+	//Rectanble을 만들어 상대적으로 접근할 필요가 있음. KeyComponent에도 마찬가지로
 }
 
 void MainComponent::resized()
 {
-    // This is called when the MainContentComponent is resized.
-    // If you add any child components, this is where you should
-    // update their positions.
+
 }
+
