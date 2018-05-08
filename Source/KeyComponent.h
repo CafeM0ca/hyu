@@ -26,6 +26,7 @@ public:
 	KeyComponent();
 	~KeyComponent();
 	bool keyPressed(const KeyPress& key) override;
+	void paint(Graphics&) override;
 private:
 	KeyPress dkey,fkey,jkey,kkey;
 	KeyPress tabkey,qkey,wkey; 

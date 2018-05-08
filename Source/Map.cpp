@@ -86,7 +86,7 @@ Rectangle<float> Map::GetBaseRectangle()
 {
 	switch(mode){
 		case MapMode::single:
-			return Rectangle<float>(map_info.single*4,map_info.single*11,map_info.single,getHeight()/30*0.75);   
+			return Rectangle<float>(map_info.single*4,-10,map_info.single,getHeight()/30*0.75);   
 	}
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "KeyComponent.h"
+//#include "KeyComponent.h"
 #include "Menu.h"
 #include "Map.h"
 #include "Note.h"
@@ -15,7 +15,7 @@ public:
     void paint (Graphics& g) override;
     void resized() override;
 private:
-	KeyComponent keycomponent;
+	//KeyComponent keycomponent;
 	Menu menu;
 	Map map;
 	Note note;

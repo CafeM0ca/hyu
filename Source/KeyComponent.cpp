@@ -113,6 +113,10 @@ bool KeyComponent::keyPressed(const KeyPress& key)
 	return true;
 }
 
+void KeyComponent::paint(Graphics& g)
+{
+
+}
 //==============================================================================
 #if 0
 /*  -- Projucer information section --
