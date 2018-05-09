@@ -2,8 +2,8 @@
 #include "Note.h"
 Note::Note() : bpm(0),del_cnt(0)
 {
-	setFramesPerSecond(60); // bpm조절
 	addAndMakeVisible(key);
+	setFramesPerSecond(60); // bpm조절
 }
 
 Note::~Note()
@@ -24,7 +24,6 @@ void Note::update()
 	// setFramesPerSecond에 맞춰서 떨어진다. 60이면 1초에 60번 호출됨.
 	if(Random::getSystemRandom().nextInt(Range<int>(1,15)) == 1 && note_list.size() <= 30){	
 		AddNote(block);
-		DBG("ADD");
 	}
 	/*
 	if(note_list.size() == 30)
@@ -42,7 +41,6 @@ void Note::update()
 		else
 			del_cnt++;
 	}
-	std::cout << "size: " << note_list.size() << std::endl;
 }
 
 void Note::paint (Graphics& g)
@@ -50,11 +48,25 @@ void Note::paint (Graphics& g)
 	// 무지개 노트
 	g.fillAll(Colour(13,13,13));
 	
-	g.setColour(Colours::red);
-//	g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
+	g.setColour(Colours::pink);
+	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
 	for(auto& i : note_list)
 		g.fillRect(i);
 	//g.fillRect(block);
+	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.7f).withBrightness(0.5f));
+	g.setColour(Colour(255,51,0));
+	if(key.dkey.isCurrentlyDown()){
+		g.fillRect(getWidth()/12*4+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
+	} 
+	if(key.fkey.isCurrentlyDown()){
+		g.fillRect(getWidth()/12*5+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
+	}
+	if(key.jkey.isCurrentlyDown()){
+		g.fillRect(getWidth()/12*6+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
+	}
+	if(key.kkey.isCurrentlyDown()){
+		g.fillRect(getWidth()/12*7+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
+	}
 }
 
 void Note::resized()

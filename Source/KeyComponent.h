@@ -19,7 +19,7 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-
+	
 class KeyComponent : public Component
 {
 public:
@@ -27,8 +27,15 @@ public:
 	~KeyComponent();
 	bool keyPressed(const KeyPress& key) override;
 	void paint(Graphics&) override;
-private:
+	int GetKeyStatus();
+	
+	typedef struct {
+		bool d,f,j,k;
+	}KeyStatus; 
+	KeyStatus key_status;
+    
 	KeyPress dkey,fkey,jkey,kkey;
+private:
 	KeyPress tabkey,qkey,wkey; 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
+JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
 };

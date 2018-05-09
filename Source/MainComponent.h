@@ -5,6 +5,7 @@
 #include "Menu.h"
 #include "Map.h"
 #include "Note.h"
+#include "Audio.h" //auido 임시
 //#include "BackgroundImageComponent.h"
 class MainComponent   : public Component
 
@@ -15,9 +16,10 @@ public:
     void paint (Graphics& g) override;
     void resized() override;
 private:
-	//KeyComponent keycomponent;
+//	KeyComponent keycomponent;
 	Menu menu;
 	Map map;
 	Note note;
+	Audio audio;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

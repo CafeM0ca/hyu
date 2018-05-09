@@ -14,7 +14,7 @@ public:
 	void update() override;
     void paint (Graphics&) override;
     void resized() override;
-	void AddNote(Rectangle<float>& rect);
+	void AddNote(Rectangle<float>& rect); // 노트 패턴마다 만들기. ex) 단일노트, 이중노트, 롱노트
 	void RemoveNote(Rectangle<float> rect);
 	void SetNotePos(const Rectangle<float>& rect);
 	//getMillisecondsSinceLastUpdate() update호출한수
@@ -23,8 +23,8 @@ private:
 	Rectangle<float> block;
 	unsigned int bpm;
 	unsigned int del_cnt;
-	KeyComponent key;
 	void DownNote();
+	KeyComponent key;
 	//void timerCallback() override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Note)
 };
