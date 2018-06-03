@@ -28,8 +28,14 @@ void Map::InitDefaultMap(int width,int height)
 void Map::paint (Graphics& g)
 {
 	
+	// note 덮기위해
+	g.fillRect(key_frame1);
+	g.fillRect(key_frame2);
+	g.fillRect(key_frame3);
+	g.fillRect(key_frame4);
+
+
     g.setColour(Colour(255,133,51));
-	
 	g.drawRect(vertical1,2.0f);
 	g.drawRect(vertical2,2.0f);
 	g.drawRect(vertical3,2.0f);
@@ -38,7 +44,7 @@ void Map::paint (Graphics& g)
 	g.setColour(Colours::white);
 	g.drawRect(urteil,2.0f);
 	
-	g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
+
 	g.setFont(Font(60.0f,Font::bold));
 	g.setColour(Colours::white);
 	g.drawText("D",key_frame1,Justification::centred,true);
@@ -46,8 +52,6 @@ void Map::paint (Graphics& g)
 	g.drawText("J",key_frame3,Justification::centred,true);
 	g.drawText("K",key_frame4,Justification::centred,true);
 
-//	g.drawRect(frame5,2.0f);
-//	g.drawRect(frame6,2.0f);
 
 }
 
@@ -60,7 +64,7 @@ void Map::resized()
 
 void Map::ChangeMap( /*MapMode::single*/) 
 {
-	//mode = m;
+	// 나중에 모드 추가할때 this.mode를 변경해야함.
   	switch(mode){
 		case MapMode::single:
 			vertical1.setBounds(map_info.single*4,-10,map_info.single,getHeight()+10);   
@@ -68,11 +72,13 @@ void Map::ChangeMap( /*MapMode::single*/)
 			vertical3.setBounds(map_info.single*6,-10,map_info.single,getHeight()+10);   
 			vertical4.setBounds(map_info.single*7,-10,map_info.single,getHeight()+10);   
 	
-			urteil.setBounds(map_info.single*4,getHeight()/12*10.5,map_info.single*4,getHeight()/30);
-			key_frame1.setBounds(map_info.single*4,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-			key_frame2.setBounds(map_info.single*5,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-			key_frame3.setBounds(map_info.single*6,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
-			key_frame4.setBounds(map_info.single*7,getHeight()/12*10.5+getHeight()/30,map_info.single,getHeight() - getHeight()/12*10.5 - getHeight()/30);
+			float urteil_height = getHeight()/12*10.5; // 판정포인트 시작y
+			float keyframe_height = urteil_height + getHeight()/30; // 키입력칸 시작 y
+			urteil.setBounds(map_info.single*4,urteil_height,map_info.single*4,getHeight()/30);
+			key_frame1.setBounds(map_info.single*4,keyframe_height,map_info.single,getHeight() - keyframe_height);
+			key_frame2.setBounds(map_info.single*5,keyframe_height,map_info.single,getHeight() - keyframe_height);
+			key_frame3.setBounds(map_info.single*6,keyframe_height,map_info.single,getHeight() - keyframe_height);
+			key_frame4.setBounds(map_info.single*7,keyframe_height,map_info.single,getHeight() - keyframe_height);
 	}
 }
 
@@ -80,11 +86,12 @@ Rectangle<float> Map::GetBaseRectangle()
 {
 	switch(mode){
 		case MapMode::single:
-			return Rectangle<float>(map_info.single*4,map_info.single*11,map_info.single,30);   
+			return Rectangle<float>(map_info.single*4,-10,map_info.single,getHeight()/30*0.75);   
 	}
 }
 
 void Map::MapDataUpdate()
 {
+	// 화면 크기조절할때 호출
 	map_info.single = getWidth() / 12;
 }

@@ -4,16 +4,19 @@ MainComponent::MainComponent()
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (1080,720);
-	addAndMakeVisible(keycomponent);
+	//addAndMakeVisible(keycomponent);
 	addAndMakeVisible(note);
 	addAndMakeVisible(menu);
 	addAndMakeVisible(map);
+	addAndMakeVisible(audio);
+	//keycomponent.setBounds(0,0,getWidth(),getHeight());
 	menu.setBounds(0,0,getWidth(),getHeight());
 	map.setBounds(0,0,getWidth(),getHeight());
 	map.InitDefaultMap(getWidth(),getHeight());
 	note.setBounds(0,0,getWidth(),getHeight());
 	note.SetNotePos(Rectangle<float>(map.GetBaseRectangle()));
 	//note.AddNote(Rectangle<float>(map.map_info.single*4,0,map.map_info.single*4,getHeight()));
+	audio.SelectSong();
 }
 
 MainComponent::~MainComponent()
