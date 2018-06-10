@@ -3,6 +3,10 @@
 <JUCERPROJECT id="TUGkcO" name="hyu" projectType="guiapp" jucerVersion="5.3.2">
   <MAINGROUP id="I24T4D" name="hyu">
     <GROUP id="{8E7A5AAE-8419-C36D-5392-E2DC5C06F4FC}" name="Source">
+      <FILE id="iWFez9" name="SongLayout.cpp" compile="1" resource="0" file="Source/SongLayout.cpp"/>
+      <FILE id="x9KRKE" name="SongLayout.h" compile="0" resource="0" file="Source/SongLayout.h"/>
+      <FILE id="SCpwSg" name="Interface.cpp" compile="1" resource="0" file="Source/Interface.cpp"/>
+      <FILE id="xsOkFz" name="Interface.h" compile="0" resource="0" file="Source/Interface.h"/>
       <FILE id="KMSmwF" name="Audio.cpp" compile="1" resource="0" file="Source/Audio.cpp"/>
       <FILE id="JpRdor" name="Audio.h" compile="0" resource="0" file="Source/Audio.h"/>
       <FILE id="tB6fZT" name="KeyComponent.cpp" compile="1" resource="0"
@@ -10,13 +14,8 @@
       <FILE id="rgwlUP" name="KeyComponent.h" compile="0" resource="0" file="Source/KeyComponent.h"/>
       <FILE id="WGhZ3L" name="Map.cpp" compile="1" resource="0" file="Source/Map.cpp"/>
       <FILE id="Fybced" name="Map.h" compile="0" resource="0" file="Source/Map.h"/>
-      <FILE id="iV95Jb" name="Menu.cpp" compile="1" resource="0" file="Source/Menu.cpp"/>
-      <FILE id="SXNEYB" name="Menu.h" compile="0" resource="0" file="Source/Menu.h"/>
       <FILE id="y9MGzK" name="Note.cpp" compile="1" resource="0" file="Source/Note.cpp"/>
       <FILE id="JMRxZG" name="Note.h" compile="0" resource="0" file="Source/Note.h"/>
-      <FILE id="ir4pm0" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="mbQgc8" name="MainComponent.cpp" compile="1" resource="0"
-            file="Source/MainComponent.cpp"/>
       <FILE id="eWK6SO" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>

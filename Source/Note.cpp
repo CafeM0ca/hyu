@@ -46,7 +46,7 @@ void Note::update()
 void Note::paint (Graphics& g)
 {
 	// 무지개 노트
-	g.fillAll(Colour(13,13,13));
+//	g.fillAll(Colour(13,13,13));
 	
 	g.setColour(Colours::pink);
 	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
@@ -55,6 +55,7 @@ void Note::paint (Graphics& g)
 	//g.fillRect(block);
 	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.7f).withBrightness(0.5f));
 	g.setColour(Colour(255,51,0));
+	/*
 	if(key.dkey.isCurrentlyDown()){
 		g.fillRect(getWidth()/12*4+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
 	} 
@@ -67,6 +68,7 @@ void Note::paint (Graphics& g)
 	if(key.kkey.isCurrentlyDown()){
 		g.fillRect(getWidth()/12*7+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
 	}
+	*/
 }
 
 void Note::resized()

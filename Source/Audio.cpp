@@ -1,12 +1,5 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-============================================================================== */
-
 #include "Audio.h"
-
-//==============================================================================
+/*
 Audio::Audio() :state(Stopped), file("~/coding/cpp/hyu/Song/test.wav")
 {
 	
@@ -23,7 +16,6 @@ Audio::~Audio()
     shutdownAudio();
 }
 
-//==============================================================================
 void Audio::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     // This function will be called when the audio device is started, or when
@@ -86,12 +78,12 @@ void Audio::SelectSong()
 
 		//ScopedPointer는 스마트 포인터 같은 개념
 		ScopedPointer<AudioFormatReaderSource> newSource = new AudioFormatReaderSource(reader,true);
-		/* setSource  삽입할 소스를 설정
+		 setSource  삽입할 소스를 설정
 		 * 1 nullptr, 
 		 * 2 버퍼 읽을 사이즈, 
 		 * 3 백그라운드 버퍼읽기 쓰레드
 		 * 4 샘플의 재생속도. 0이면 조절안함 알아서 음정도 맞춰줌
-		 * 5 재생하는데 필요한 채널 수*/
+		 * 5 재생하는데 필요한 채널 수
 		transportSource.setSource(newSource,0,nullptr,reader->sampleRate);
 		readerSource = newSource.release();
 		changeState(Starting); // 파일 경로지정하고 다 셋팅한 후 Starting해야함.
@@ -126,4 +118,4 @@ void Audio::changeState (TransportState newState)
 		}
 	}
 }
-
+*/

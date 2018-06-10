@@ -18,7 +18,6 @@
 */
 
 #pragma once
-<<<<<<< HEAD
 
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
@@ -60,28 +59,6 @@ private:
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
-=======
-#include "../JuceLibraryCode/JuceHeader.h"
-	
-class KeyComponent : public Component
-{
-public:
-	KeyComponent();
-	~KeyComponent();
-	bool keyPressed(const KeyPress& key) override;
-	void paint(Graphics&) override;
-	int GetKeyStatus();
-	
-	typedef struct {
-		bool d,f,j,k;
-	}KeyStatus; 
-	KeyStatus key_status;
-    
-	KeyPress dkey,fkey,jkey,kkey;
-private:
-	KeyPress tabkey,qkey,wkey; 
-JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
->>>>>>> a29efea4015d8bbd60648e4759f193521b1d06dd
 };
 
 //[EndFile] You can add extra defines here...

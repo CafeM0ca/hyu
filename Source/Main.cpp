@@ -6,7 +6,7 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.h"
+#include "Interface.h"
 
 //==============================================================================
 class hyuApplication  : public JUCEApplication
@@ -63,7 +63,7 @@ public:
                                                     DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar (true);
-            setContentOwned (new MainComponent(), true);
+            setContentOwned (new Interface(), true);
             setResizable (true, true);
 			//setFullScreen(true);
             centreWithSize (getWidth(), getHeight());
