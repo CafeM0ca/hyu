@@ -5,8 +5,8 @@ Interface::Interface()
 
 	addAndMakeVisible(songLayout);
 	addAndMakeVisible(map);
+	addAndMakeVisible(noteManager);
 	//audio.SelectSong();
-	
 }
 
 Interface::~Interface()
@@ -26,8 +26,12 @@ void Interface::resized()
 {
 
 	songLayout.setBounds(0,0,getWidth()/3,getHeight());
-
 	map.setBounds(getWidth()/12*4,0,getWidth()/12*4,getHeight());
+	noteManager.setBounds(getWidth()/12*4,0,getWidth()/12*4,getHeight());
+
 }
 
+void Interface::run()
+{
 
+}

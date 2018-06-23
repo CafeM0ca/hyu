@@ -1,9 +1,15 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Note.h"
-Note::Note() : bpm(0),del_cnt(0)
+Note::Note() : 
+	bpm(0),del_cnt(0),
+	dkey('d'),
+	fkey('f'),
+	jkey('j'),
+	kkey('k')
 {
-	addAndMakeVisible(key);
 	setFramesPerSecond(60); // bpm조절
+	setWantsKeyboardFocus(true);
+//	generateNote();
 }
 
 Note::~Note()
@@ -11,36 +17,16 @@ Note::~Note()
 
 } 
 
-/*
-void Note::timerCallback()
-{
-	if(note_list.size() > 30)
-		note_list.clear();
-}
-*/
-
 void Note::update()
 {
 	// setFramesPerSecond에 맞춰서 떨어진다. 60이면 1초에 60번 호출됨.
+	/*
 	if(Random::getSystemRandom().nextInt(Range<int>(1,15)) == 1 && note_list.size() <= 30){	
 		AddNote(block);
 	}
-	/*
-	if(note_list.size() == 30)
-	{
-		note_list.clear();
-	}
 	*/
-	if(note_list.size() > 0)
-		DownNote();
-	if(note_list.size() >= 30){
-		if(del_cnt == 120){
-			note_list.clear();
-			del_cnt = 0;
-		}
-		else
-			del_cnt++;
-	}
+	
+	downNote();
 }
 
 void Note::paint (Graphics& g)
@@ -48,27 +34,35 @@ void Note::paint (Graphics& g)
 	// 무지개 노트
 //	g.fillAll(Colour(13,13,13));
 	
-	g.setColour(Colours::pink);
+	g.setColour(Colour(254,20,133));
 	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
-	for(auto& i : note_list)
-		g.fillRect(i);
-	//g.fillRect(block);
-	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.7f).withBrightness(0.5f));
-	g.setColour(Colour(255,51,0));
+	
+	// Note Color
 	/*
-	if(key.dkey.isCurrentlyDown()){
-		g.fillRect(getWidth()/12*4+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
+	for(auto& i : drailNote)
+		g.fillRect(i);
+	for(auto& i : frailNote)
+		g.fillRect(i);
+	for(auto& i : jrailNote)
+		g.fillRect(i);
+	for(auto& i : krailNote)
+		g.fillRect(i);
+*/
+	//g.fillRect(block);
+	g.setColour (Colour(Colours::deepskyblue).withBrightness(0.7f));
+	//g.setColour(Colour(255,51,0));
+	if(dkey.isCurrentlyDown()){
+		g.fillRect(2,getHeight()/12*10.5,getWidth()/4-2,getHeight()/30);
 	} 
-	if(key.fkey.isCurrentlyDown()){
-		g.fillRect(getWidth()/12*5+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
+	if(fkey.isCurrentlyDown()){
+		g.fillRect(getWidth()/4+2,getHeight()/12*10.5,getWidth()/4-2,getHeight()/30);
 	}
-	if(key.jkey.isCurrentlyDown()){
-		g.fillRect(getWidth()/12*6+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
+	if(jkey.isCurrentlyDown()){
+		g.fillRect(getWidth()/4*2+2,getHeight()/12*10.5,getWidth()/4-2,getHeight()/30);
 	}
-	if(key.kkey.isCurrentlyDown()){
-		g.fillRect(getWidth()/12*7+2,getHeight()/12*10.5,getWidth()/12-2,getHeight()/30);
+	if(kkey.isCurrentlyDown()){
+		g.fillRect(getWidth()/4*3+2,getHeight()/12*10.5,getWidth()/4-2,getHeight()/30);
 	}
-	*/
 }
 
 void Note::resized()
@@ -76,45 +70,143 @@ void Note::resized()
 
 }
 
-void Note::SetNotePos(const Rectangle<float>& rect)
+bool Note::keyPressed(const KeyPress& key)
 {
-	block = rect;
+	float y = 0.0f, h = 0.0f;
+	float timingStart = getHeight()/12*10.5; // 판정포인트 시작y
+	float timingEnd = timingStart + getHeight()/30; // 키입력칸 시작 y
+	
+
+	// perfect
+	if(key == dkey && !drailNote.empty()){
+		y = drailNote.front().getY();
+		h = y + drailNote.front().getHeight();
+
+		if(y >= timingStart && h <= timingEnd){			// perfect
+			drail.push_back(Timing::hyu);
+			drailNote.pop_front();
+		} 
+		else if((y < timingStart && y+h >= timingStart) || (y >= timingStart && h > timingEnd)){										// good
+			drail.push_back(Timing::oh);
+			drailNote.pop_front();
+		}
+		else if(h > getHeight()/2){				// miss
+			drail.push_back(Timing::no);
+			drailNote.pop_front();
+		} 
+	}
+	if(key == fkey && !frailNote.empty()){
+		y = frailNote.front().getY();
+		h = y + frailNote.front().getHeight();
+
+		if(y >= timingStart && h <= timingEnd){
+			frail.push_back(Timing::hyu);
+			frailNote.pop_front();
+		} // good
+		else if((y < timingStart && y+h >= timingStart) || (y >= timingStart && h > timingEnd)){
+			frail.push_back(Timing::oh);
+			frailNote.pop_front();
+		}
+		else if(h > getHeight()/2){
+			frail.push_back(Timing::no);
+			frailNote.pop_front();
+		} // miss
+	}
+	if(key == jkey && !jrailNote.empty()){
+		y = jrailNote.front().getY();
+		h = y + jrailNote.front().getHeight();
+
+		if(y >= timingStart && h <= timingEnd){
+			jrail.push_back(Timing::hyu);
+			jrailNote.pop_front();
+		} // good
+		else if((y < timingStart && y+h >= timingStart) || (y >= timingStart && h > timingEnd)){
+			jrail.push_back(Timing::oh);
+			jrailNote.pop_front();
+		}
+		else if(h > getHeight()/2){
+			jrail.push_back(Timing::no);
+			jrailNote.pop_front();
+		} // miss
+	}
+	if(key == kkey && !krailNote.empty()){
+		y = krailNote.front().getY();
+		h = y + krailNote.front().getHeight();
+
+		if(y >= timingStart && h <= timingEnd){
+			krail.push_back(Timing::hyu);
+			krailNote.pop_front();
+		} // good
+		else if((y < timingStart && y+h >= timingStart) || (y >= timingStart && h > timingEnd)){
+			krail.push_back(Timing::oh);
+			krailNote.pop_front();
+		}
+		else if(h > getHeight()/2){
+			krail.push_back(Timing::no);
+			krailNote.pop_front();
+		} // miss
+	}
+	return false;	
 }
-void Note::DownNote(){
-	unsigned short note_cnt = 0;	
-	for(auto &i : note_list)
-	{
-		if(i.getY() <= getHeight()/12*10.5+getHeight()/30){
-			i.setY(i.getY()+10);
+
+void Note::downNote(){
+	std::list<Rectangle<float>>::iterator iter;
+	for(iter = drailNote.begin();iter != drailNote.end();iter++){
+		if(iter->getY() <= getHeight()/12*10.5+getHeight()/30){
+			iter->setY(iter->getY()+10);
+		} else{
+			drail.push_back(Timing::no);
+			drailNote.pop_front();
 		}
 	}
-	/*
-	for(auto i=0;i<note_cnt;i++){
-		DBG("pop");
-		note_list.pop_front();
+	for(iter = frailNote.begin();iter != frailNote.end();iter++){
+		if(iter->getY() <= getHeight()/12*10.5+getHeight()/30){
+			iter->setY(iter->getY()+10);
+		} else{
+			frail.push_back(Timing::no);
+			frailNote.pop_front();
+		}
 	}
-	*/
-	/*
-	for(auto& i : note_list){
+	for(iter = jrailNote.begin();iter != jrailNote.end();iter++){
+		if(iter->getY() <= getHeight()/12*10.5+getHeight()/30){
+			iter->setY(iter->getY()+10);
+		} else{
+			jrail.push_back(Timing::no);
+			jrailNote.pop_front();
+		}
+	}
+	for(iter = krailNote.begin();iter != krailNote.end();iter++){
+		if(iter->getY() <= getHeight()/12*10.5+getHeight()/30){
+			iter->setY(iter->getY()+10);
+		} else{
+			krail.push_back(Timing::no);
+			krailNote.pop_front();
+		}
+	}
+}
 
-	}
-	if(block.getY() <= getHeight()/12*10.5+getHeight()/30){
-		block.setY(block.getY()+20);
-	}
-	else
-	{
-		block.setX(getWidth()/12 * Random::getSystemRandom().nextInt(Range<int>(4,8)));
-		block.setY(-10);
-		bpm++;
-	}
-	if(Random::getSystemRandom().nextInt(Range<int>(1,5)) == 2)
-	{
-		AddNote(block);
-	}
+void Note::generateNote()
+{
+	/*
+	for(int i=5;i<180;i++){
+		if(Random::getSystemRandom().nextInt(Range<int>(1,15)) == 1){	
+			if(i%4 == 0)
+				drailReadyNote.push_back(i);
+			else if(i % 4 == 1)
+				frailReadyNote.push_back(i);
+			else if(i% 4 == 2)
+				jrailReadyNote.push_back(i);
+			else if(i% 4 == 3)
+				krailReadyNote.push_back(i);
+		}
+	}							
 	*/
 }
+
+/*
 void Note::AddNote(Rectangle<float>& rect)
 {
-	rect.setX(getWidth()/12 * Random::getSystemRandom().nextInt(Range<int>(4,8)));
+	rect.setX(getWidth()/4 * Random::getSystemRandom().nextInt(Range<int>(4,8)));
 	note_list.push_back(rect);
 }
+*/

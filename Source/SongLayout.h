@@ -22,10 +22,9 @@ public:
 
 	// for change map
 	inline void changeIsSelected();
-	inline bool getIsSelected() const;
+	bool getIsSelected() const;
 private:
-	std::vector<std::string> songList;
-	std::vector<std::string>::iterator songListIter;
+	std::vector<std::string> songList; std::vector<std::string>::iterator songListIter;
 	std::string songTitle;
 	const KeyPress wkey;
 	const KeyPress skey;

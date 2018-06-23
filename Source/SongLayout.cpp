@@ -66,6 +66,7 @@ bool SongLayout::keyPressed(const KeyPress& key)
 	}
 	else if(key == KeyPress::returnKey)
 		changeIsSelected();
+
 	return false;
 }
 void SongLayout::loadSongList()

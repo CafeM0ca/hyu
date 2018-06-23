@@ -1,6 +1,6 @@
 #include "Audio.h"
 /*
-Audio::Audio() :state(Stopped), file("~/coding/cpp/hyu/Song/test.wav")
+Audio::Audio() :state(Stopped), file("./SoNakByul-hateduck.mp3")
 {
 	
 	formatManager.registerBasicFormats();       // [1]
