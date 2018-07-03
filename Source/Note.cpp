@@ -1,39 +1,54 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Note.h"
-Note::Note(unsigned short _bpm = 60) : 
+Note::Note(short _bpm = 60) : 
 	BPM(_bpm),
 	dkey('d'),
 	fkey('f'),
 	jkey('j'),
-	kkey('k'),
+	kkey('k')
 {
-	note = Rectangle<float>(0,-30,getWidth()/4,-10);
+
 	DBG("Note Component ctor");
 	setFramesPerSecond(BPM); // bpm조절
 //	setWantsKeyboardFocus(true);
 }
-
 Note::~Note()
-{ 
+{
 
-} 
+}
 
-void Note::update()
+SingleNote::SingleNote(short _bpm) : 
+	Note(_bpm)
+{
+	DBG("SingleNote ctor");
+	rect = Rectangle<float>(0,30,443/4,20);
+}
+
+SingleNote::~SingleNote()
+{
+
+}
+void SingleNote::update()
 {
 	// setFramesPerSecond에 맞춰서 떨어진다. 60이면 1초에 60번 호출됨.
 	
 	//downNote();
 }
 
-void Note::paint (Graphics& g)
+void SingleNote::paint (Graphics& g)
 {
+	std::cout << "SingleNote width: " << getWidth() << std::endl;
+	std::cout << "rect width: " << rect.getWidth() << std::endl;
+
 	// 무지개 노트
-//	g.fillAll(Colour(13,13,13));
+	//g.fillAll(Colour(13,13,13));
 	
-	//g.setColour(Colour(254,20,133));
+	g.setColour(Colour(254,20,133));
 	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
-	
-	//g.fillRect(block);
+	g.fillRect(rect);
+	rect.setY(rect.getY()+10);
+	if(rect.getY() > getHeight())
+		rect.setY(-10);
 	/*
 	g.setColour (Colour(Colours::deepskyblue).withBrightness(0.7f));
 	//g.setColour(Colour(255,51,0));
@@ -52,7 +67,7 @@ void Note::paint (Graphics& g)
 	*/
 }
 
-void Note::resized()
+void SingleNote::resized()
 {
 
 }
@@ -73,7 +88,8 @@ bool Note::keyPressed(const KeyPress& key)
 		if(y >= timingStart && h <= timingEnd){			// perfect
 			drail.push_back(Timing::hyu);
 			drailNote.pop_front();
-		} 
+
+			} 
 		else if((y < timingStart && y+h >= timingStart) || (y >= timingStart && h > timingEnd)){										// good
 			drail.push_back(Timing::oh);
 			drailNote.pop_front();
@@ -136,6 +152,5 @@ bool Note::keyPressed(const KeyPress& key)
 	}
 */
 	return false;	
-
 }
 

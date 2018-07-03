@@ -5,7 +5,7 @@
 #include "SongLayout.h"
 #include "NoteManager.h"
 //#include "Audio.h" //auido 임시
-class Interface   : public Component
+class Interface   : public Component, private ChangeListener
 {
 public:
     Interface();
@@ -17,7 +17,7 @@ private:
 	Map map;
 	NoteManager noteManager;
 
-	SongLayout songLayout;
+//	SongLayout songLayout;
 	void run();
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Interface)
 };

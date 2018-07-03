@@ -1,26 +1,25 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "NoteManager.h"
 //#include "Audio.h"
-NoteManager::NoteManager()
+NoteManager::NoteManager() : snote(60)
 {
-//	addAndMakeVisible(note);
-//	addAndMakeVisible(song);
+	addAndMakeVisible(snote);		
+	std::cout << "noteManager: getWidth()" << getWidth() << std::endl;
 }
 
 NoteManager::~NoteManager()
 {
 }
 
-void NoteManager::paint (Graphics& g)
+void NoteManager::paint(Graphics& g)
 {
 
 }
 
 void NoteManager::resized()
 {
-//	note.setBounds(getLocalBounds());
+	snote.setBounds(0,0,getWidth(),getHeight());
 }
-
 void NoteManager::playSong()
 {
 //	song.SelectSong();	

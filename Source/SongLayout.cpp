@@ -8,8 +8,6 @@ SongLayout::SongLayout() :
 	isSelected(false)
 {
 	loadSongList();
-	setWantsKeyboardFocus(true);
-
 	songListIter = songList.begin();
 }
 

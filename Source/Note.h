@@ -8,20 +8,16 @@
 class Note    : public AnimatedAppComponent 
 {
 public:
-    Note();
-    ~Note();
-	void update() override;
-    void paint (Graphics&) override;
-    void resized() override;
+	Note() = delete;
+	Note(short _bpm /*= 60*/);
+    virtual ~Note();
 	bool keyPressed(const KeyPress&) override;
 	/********************************************/
 	void setBPM(unsigned short v);
-private:
-	Rectangle<float> note;
-
-	static unsigned short BPM;	
-	Time startTime;
-	RelativeTime rtime;
+protected:
+	short BPM;	
+	//Time startTime;
+	//RelativeTime rtime;
 
 	const KeyPress dkey;
 	const KeyPress fkey;
@@ -29,18 +25,24 @@ private:
 	const KeyPress kkey;
 	enum class Timing{
 		hyu,
-		hmm?,
+		hmm,
 		no	
 	};
+	//void effectSound();
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Note)
 };
 
 class SingleNote : public Note
 {
 public:
-
+	SingleNote() = delete;
+	SingleNote(short _bpm /* = 60*/);
+	~SingleNote();
+	void update() override;
+    void paint (Graphics&) override;
+    void resized() override;
 private:
-
+	Rectangle<float> rect;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SingleNote)
 };
 /*
