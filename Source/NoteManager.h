@@ -13,7 +13,7 @@ public:
 	void playSong();
 
 private:
-	SingleNote snote;
+//	SingleNote snote;
 	
 //	Audio song;
 };

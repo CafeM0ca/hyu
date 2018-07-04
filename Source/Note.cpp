@@ -1,7 +1,6 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Note.h"
-Note::Note(short _bpm = 60) : 
-	BPM(_bpm),
+Note::Note() : 
 	dkey('d'),
 	fkey('f'),
 	jkey('j'),
@@ -17,11 +16,10 @@ Note::~Note()
 
 }
 
-SingleNote::SingleNote(short _bpm) : 
-	Note(_bpm)
+SingleNote::SingleNote(short nx, short ny, short nwidth,short nheight) 
+	: rect(nx, ny, nwidth, nheight);
 {
 	DBG("SingleNote ctor");
-	rect = Rectangle<float>(0,30,443/4,20);
 }
 
 SingleNote::~SingleNote()
@@ -30,9 +28,8 @@ SingleNote::~SingleNote()
 }
 void SingleNote::update()
 {
-	// setFramesPerSecond에 맞춰서 떨어진다. 60이면 1초에 60번 호출됨.
-	
-	//downNote();
+	rect.setY(rect.getY()+10);
+	repaint();
 }
 
 void SingleNote::paint (Graphics& g)
@@ -46,9 +43,6 @@ void SingleNote::paint (Graphics& g)
 	g.setColour(Colour(254,20,133));
 	//g.setColour (Colour((juce::uint32) Random::getSystemRandom().nextInt()).withAlpha(0.5f).withBrightness(0.7f));
 	g.fillRect(rect);
-	rect.setY(rect.getY()+10);
-	if(rect.getY() > getHeight())
-		rect.setY(-10);
 	/*
 	g.setColour (Colour(Colours::deepskyblue).withBrightness(0.7f));
 	//g.setColour(Colour(255,51,0));
@@ -75,6 +69,11 @@ void SingleNote::resized()
 bool Note::keyPressed(const KeyPress& key)
 {
 	/*
+	 * 판정포인트 확인.
+	 * 범위에 Timing .
+	 * never use float. because float calculate is unsafety
+	 *
+	
 	float y = 0.0f, h = 0.0f;
 	float timingStart = getHeight()/12*10.5; // 판정포인트 시작y
 	float timingEnd = timingStart + getHeight()/30; // 키입력칸 시작 y
