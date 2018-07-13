@@ -3,9 +3,9 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Map.h"
 #include "SongLayout.h"
-#include "NoteManager.h"
+#include "NoteComponent.h"
 //#include "Audio.h" //auido 임시
-class Interface   : public Component, private ChangeListener
+class Interface   : public Component
 {
 public:
     Interface();
@@ -14,7 +14,7 @@ public:
     void resized() override;
 
 private:
-	Map map;
+	//Map map;
 	NoteManager noteManager;
 
 //	SongLayout songLayout;
