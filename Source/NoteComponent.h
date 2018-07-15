@@ -54,9 +54,10 @@ public:
 private:
 	// note queue
 	std::deque<Note> noteDeque;
-	int notePos = 0;
+	int activePos= 0;
 	bool initNote = false;
 	void generateNote(const short playTime = 300);
+	int width;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NoteManager)
 };
 
