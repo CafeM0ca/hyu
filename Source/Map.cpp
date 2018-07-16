@@ -14,7 +14,8 @@ Map::~Map()
 void Map::paint (Graphics& g)
 {
 	
-	// note 덮기위해
+	// D F J K 부분 덮기 
+	//g.setColour(Colours::blue);
 	g.fillRect(key_frame1);
 	g.fillRect(key_frame2);
 	g.fillRect(key_frame3);

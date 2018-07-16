@@ -14,8 +14,8 @@ public:
     void resized() override;
 
 private:
-	//Map map;
 	NoteManager noteManager;
+	Map map;
 
 //	SongLayout songLayout;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Interface)
