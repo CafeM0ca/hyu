@@ -19,8 +19,14 @@ void Interface::paint (Graphics& g)
 		
 	g.fillAll(Colour(13,13,13));
 //	g.setColour(Colour(255,91,51));
+<<<<<<< HEAD
 	//Rectanble을 만들어 상대적으로 접근할 필요가 있음. KeyComponent에도 마찬가지로
 
+=======
+//	g.fillRect(Rectangle<int>(0, 0, 100, 100));
+	//Rectanble을 만들어 상대적으로 접근할 필요가 있음. KeyComponent에도 마찬가지로
+	
+>>>>>>> test
 }
 
 void Interface::resized()
@@ -29,7 +35,11 @@ void Interface::resized()
 //	songLayout.setBounds(0,0,getWidth()/3,getHeight());
 //	map.setBounds(getWidth()/12*4,0,getWidth()/12*4,getHeight());
 	//noteManager.setBounds(getWidth()/12*4,0,getWidth()/12*4,getHeight());
+<<<<<<< HEAD
 	noteManager.setBounds(getWidth()/12*4,0,getWidth()/12*4,getHeight());
+=======
+	noteManager.setBounds(getWidth() / 3, 0, getWidth() / 3, getHeight());
+>>>>>>> test
 }
 
 void Interface::run()

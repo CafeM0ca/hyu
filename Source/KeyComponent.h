@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.2.1
+  Created with Projucer version: 5.3.2
 
   ------------------------------------------------------------------------------
 
@@ -18,16 +18,48 @@
 */
 
 #pragma once
-#include "../JuceLibraryCode/JuceHeader.h"
 
-class KeyComponent : public Component
+//[Headers]     -- You can add your own extra header files here --
+#include "JuceHeader.h"
+//[/Headers]
+
+
+
+//==============================================================================
+/**
+                                                                    //[Comments]
+    An auto-generated component, created by the Projucer.
+
+    Describe your class and how it works here!
+                                                                    //[/Comments]
+*/
+class KeyComponent  : public Component
 {
 public:
-	KeyComponent();
-	~KeyComponent();
-	bool keyPressed(const KeyPress& key) override;
+    //==============================================================================
+    KeyComponent ();
+    ~KeyComponent();
+
+    //==============================================================================
+    //[UserMethods]     -- You can add your own custom methods in this section.
+    //[/UserMethods]
+
+    void paint (Graphics& g) override;
+    void resized() override;
+    bool keyPressed (const KeyPress& key) override;
+
+
+
 private:
-	KeyPress dkey,fkey,jkey,kkey;
-	KeyPress tabkey,qkey,wkey; 
+    //[UserVariables]   -- You can add your own custom variables in this section.
+    //[/UserVariables]
+
+    //==============================================================================
+
+
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyComponent)
 };
+
+//[EndFile] You can add extra defines here...
+//[/EndFile]
