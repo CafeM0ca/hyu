@@ -42,8 +42,13 @@ void NoteManager::update()
 	notePos++;		// 매 초마다 노트수 증가
 	*/
 	// 1. 노트가 바닥치기 전까지 다 pop 
-	if(activePos < noteDeque.size())
-		activePos++;
+	if(activePos < noteDeque.size()) {
+		Random rand;
+		rand.setSeedRandomly();
+		auto r = rand.getSystemRandom().nextInt(Range<int>(0, 20));
+		if(r == 1)
+			activePos++;
+	}
 	if (!noteDeque.empty() && noteDeque.front().rect.getY() >= getHeight()) {
 		std::cout << "pop note" << std::endl;
 		noteDeque.pop_front();
@@ -56,7 +61,7 @@ void NoteManager::update()
 		for (auto& i : noteDeque) {
 			if (currentPos < activePos) {
 				std::cout << currentPos << " note.y += 10" << std::endl;
-				i.rect.setY(i.rect.getY() + 10);
+				i.rect.setY(i.rect.getY() + /*10*/ 15);
 				currentPos++;
 			}
 			else break;
@@ -96,7 +101,7 @@ void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 	rand.setSeedRandomly();
 	auto pwid = getParentWidth() / 3;
 	std::cout << pwid << std::endl;
-	for (int i = 0; i < playTime; i++) {
+	for (int i = 0; i < /*playTime*/ 30000; i++) {
 		auto location = rand.getSystemRandom().nextInt(Range<int>(0, 4));
 		noteDeque.push_back(Note((1280 /12 *location) , 0, 1280 / 12, 10));
 	}

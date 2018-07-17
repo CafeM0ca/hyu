@@ -25,9 +25,7 @@ private:
 };
 /*
 class SingleNote : public Note
-{
-public:
-	SingleNote() {}
+{ public: SingleNote() {}
 	SingleNote(const float& x, const float& y, const float& width, const float& height);
 	~SingleNote();
 	inline auto getX() const { return rect.getX(); };
@@ -43,6 +41,13 @@ public:
 
 };
 */
+
+enum class Judgement : float {
+	wow = ,
+	ok,
+	hyu
+}; 
+
 class NoteManager : public AnimatedAppComponent
 {
 public:
@@ -54,7 +59,8 @@ public:
 private:
 	// note queue
 	std::deque<Note> noteDeque;
-	int activePos= 0;
+	std::deque<Judgement> score;
+	int activePos = 0;											// 큐에서 활성화된 노트 pos
 	bool initNote = false;
 	void generateNote(const short playTime = 300);
 	int width;
