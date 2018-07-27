@@ -22,11 +22,6 @@ private:
 	Rectangle<float> key_frame3;
 	Rectangle<float> key_frame4;
 	Rectangle<float> urteil;
-	const KeyPress dkey = KeyPress('d');
-	const KeyPress fkey = KeyPress('f');
-	const KeyPress jkey = KeyPress('j');
-	const KeyPress kkey = KeyPress('k');
-	
    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Map)
 };
 

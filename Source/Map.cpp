@@ -14,20 +14,7 @@ Map::~Map()
 
 void Map::paint (Graphics& g)
 {
-	float urteil_height = getHeight()/12*10.5; // 판정포인트 시작y
-	float keyframe_height = urteil_height + getHeight()/30; // 키입력칸 시작 y
-	float width = getWidth() / 4;
-
-	g.setColour(Colours::lightpink);
-	if(dkey.isCurrentlyDown()) 
-		g.fillRect(Rectangle<float>{0,urteil_height, width, keyframe_height});
-	if(fkey.isCurrentlyDown()) 
-		g.fillRect(Rectangle<float>{width, urteil_height, width, keyframe_height});
-	if(jkey.isCurrentlyDown()) 
-		g.fillRect(Rectangle<float>{width*2, urteil_height, width, keyframe_height});
-	if(kkey.isCurrentlyDown()) 
-		g.fillRect(Rectangle<float>{width*3 ,urteil_height, width, keyframe_height});
-		
+	
 	// D F J K 부분 덮기 
 	g.setColour(Colours::orange);
 	g.fillRect(key_frame1);

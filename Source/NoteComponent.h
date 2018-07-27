@@ -1,6 +1,8 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include <deque>
+#include <queue>
+#include <string>
 /* 노트 떨어지는 그래픽 */
 
 /* 생성되는 노트를 큐에 넣고 라인이 지나면 앞에서부터 뺸다.
@@ -41,13 +43,6 @@ class SingleNote : public Note
 
 };
 */
-
-enum class Judgement : float {
-	wow = ,
-	ok,
-	hyu
-}; 
-
 class NoteManager : public AnimatedAppComponent
 {
 public:
@@ -57,13 +52,23 @@ public:
 	void paint(Graphics&) override;
 	void resized() override;
 private:
-	// note queue
-	std::deque<Note> noteDeque;
-	std::deque<Judgement> score;
-	int activePos = 0;											// 큐에서 활성화된 노트 pos
+	enum class Judgement : int {
+		wow = 120,
+		ok = 100,
+		hyu = 70,
+		oops= 0
+	}; 
+	std::deque<Note> noteDeque[4];
+	std::queue<Judgement> score;
+	int activePos[4]{ 0 };											// 큐에서 활성화된 노트 pos
+	int combo = 0;
 	bool initNote = false;
 	void generateNote(const short playTime = 300);
 	int width;
+	const KeyPress dkey = KeyPress('d');
+	const KeyPress fkey = KeyPress('f');
+	const KeyPress jkey = KeyPress('j');
+	const KeyPress kkey = KeyPress('k');
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NoteManager)
 };
 
