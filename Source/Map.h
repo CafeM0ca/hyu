@@ -22,7 +22,5 @@ private:
 	Rectangle<float> key_frame3;
 	Rectangle<float> key_frame4;
 	Rectangle<float> urteil;
-
    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Map)
 };
-
