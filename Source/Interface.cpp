@@ -19,10 +19,11 @@ void Interface::paint (Graphics& g)
 {
 		
 	g.fillAll(Colour(13,13,13));
-//	g.setColour(Colour(255,91,51));
-//	g.fillRect(Rectangle<int>(0, 0, 100, 100));
-	//Rectanble을 만들어 상대적으로 접근할 필요가 있음. KeyComponent에도 마찬가지로
-	
+	// 여기서 조립
+	// repaint 흐름 막아놔야함
+	//
+	noteManager.generateNote(/* total note */);	
+
 }
 
 void Interface::resized()

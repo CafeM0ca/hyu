@@ -1,5 +1,6 @@
 #include "Audio.h"
 
+/*
 Audio::Audio() :state(Stopped), file("./SoNakByul-hateduck.mp3")
 {
 	
@@ -118,4 +119,4 @@ void Audio::changeState (TransportState newState)
 		}
 	}
 }
-
+*/

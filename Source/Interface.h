@@ -4,7 +4,7 @@
 #include "Map.h"
 #include "SongLayout.h"
 #include "NoteComponent.h"
-#include "Audio.h" //auido 임시
+//#include "Audio.h" //auido 임시
 class Interface   : public Component
 {
 public:
