@@ -3,10 +3,18 @@
 #include <deque>
 #include <queue>
 #include <string>
+#include <cassert>
 /* 노트 떨어지는 그래픽 */
 
 /* 생성되는 노트를 큐에 넣고 라인이 지나면 앞에서부터 뺸다.
 */
+enum class Judgement : int {
+	wow = 120,
+	ok = 100,
+	hyu = 70,
+	oops = 0,
+	none = -1
+};
 
 class Note
 {
@@ -16,6 +24,7 @@ public:
 	virtual ~Note();
 	/********************************************/
 	Rectangle<float> rect;
+	Judgement state{ Judgement::none };
 private:
 	//Time startTime;
 	//RelativeTime rtime;
@@ -54,17 +63,9 @@ public:
 	bool keyPressed(const KeyPress&) override;
 	void generateNote(const short playTime = 300);
 private:
-	enum class Judgement : int {
-		wow = 120,
-		ok = 100,
-		hyu = 70,
-		oops = 0,
-		none = -1
-	};
-
 	std::deque<Note> noteDeque[4];
 	std::queue<Judgement> score;
-	int activePos[4]{ 0 };											// 큐에서 활성화된 노트 pos
+	int activePos[4]{ 0 };											// 큐에서 활성화된 노트 pos 나중에 Note class로 빼야할듯
 	int combo = 0;
 	bool initNote = false;
 	void judgeNote(const short&, const float&, const float&, const float&, const float&);

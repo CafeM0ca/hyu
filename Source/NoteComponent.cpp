@@ -52,7 +52,7 @@ void NoteManager::update()
 			if (r == 1)
 				activePos[i]++;
 		}
-		if (!noteDeque[i].empty() && noteDeque[i].front().rect.getY() >= getHeight()) {
+		if (!noteDeque[i].empty() && noteDeque[i].front().state != Judgement::none) {
 			std::cout << "pop note" << std::endl;
 			noteDeque[i].pop_front();
 			activePos[i]--;										// pop된 노트 개수만큼 현재 위치 조절
@@ -63,7 +63,7 @@ void NoteManager::update()
 			int currentPos = 0;
 			for (auto& j : noteDeque[i]) {
 				if (currentPos < activePos[i]) {
-					//				std::cout << currentPos << " note.y += 10" << std::endl;
+					//	std::cout << currentPos << " note.y += 10" << std::endl;
 					j.rect.setY(j.rect.getY() + /*10*/ 15);
 					currentPos++;
 				}
@@ -75,32 +75,46 @@ void NoteManager::update()
 }
 void NoteManager::paint(Graphics& g)
 {
-
 	g.fillAll(Colour(13, 13, 13));
 
 	g.setColour(Colours::fuchsia);
-	float startY[4]{ 0 }, endY[4]{ 0 };
 	for (int i = 0; i < 4; i++)
 	{
 		if (!noteDeque[i].empty()) {
 			int currentPos = 0;
-			for (auto j : noteDeque[i]) {
+			for (auto& j : noteDeque[i]) {
 				if (currentPos < activePos[i]) {
 					g.fillRect(j.rect);
 					currentPos++;
 				}
 				else break;
 			}
-			startY[i] = noteDeque[i].front().rect.getY();
-			endY[i] = startY[i] + noteDeque[i].front().rect.getHeight();
 		}
 	}
 	const float judgement_start = getHeight() / 12 * 10.5; // 판정포인트 시작y
 	const float judgement_end = judgement_start + getHeight() / 30; // 판정포인트 끝y
 	float effectWidth = getWidth() / 4;
+
 	if (dkey.isCurrentlyDown()) {
 		std::cout << "dkey currently down" << std::endl;
-		g.setColour(Colours::gold);
+		switch (noteDeque[0].front().state)
+		{
+		case Judgement::wow:
+			g.setColour(Colours::gold);
+			break;
+		case Judgement::ok:
+			g.setColour(Colours::silver);
+			break;
+		case Judgement::hyu:
+			g.setColour(Colours::aliceblue);
+			break;
+		case Judgement::oops:
+			g.setColour(Colours::crimson);
+			break;
+		default:
+			g.setColour(Colours::orange);
+			break;
+		}
 		g.fillRect(Rectangle<float>(0              , judgement_start, effectWidth, judgement_end));
 		g.setColour(Colours::green);
 		g.setFont(Font(Font::bold, 100.0f));
@@ -108,6 +122,24 @@ void NoteManager::paint(Graphics& g)
 	}
 	if (fkey.isCurrentlyDown()) {
 		std::cout << "fkey currently down" << std::endl;
+		switch (noteDeque[1].front().state)
+		{
+		case Judgement::wow:
+			g.setColour(Colours::gold);
+			break;
+		case Judgement::ok:
+			g.setColour(Colours::silver);
+			break;
+		case Judgement::hyu:
+			g.setColour(Colours::aliceblue);
+			break;
+		case Judgement::oops:
+			g.setColour(Colours::crimson);
+			break;
+		default:
+			g.setColour(Colours::orange);
+			break;
+		}
 		g.setColour(Colours::gold);
 		g.fillRect(Rectangle<float>(effectWidth    , judgement_start, effectWidth, judgement_end));
 		g.setColour(Colours::green);
@@ -115,6 +147,24 @@ void NoteManager::paint(Graphics& g)
 		g.drawText(std::to_string(combo), effectWidth, 0, effectWidth, getHeight(), Justification::centred);
 	}
 	if (jkey.isCurrentlyDown()) {
+		switch (noteDeque[2].front().state)
+		{
+		case Judgement::wow:
+			g.setColour(Colours::gold);
+			break;
+		case Judgement::ok:
+			g.setColour(Colours::silver);
+			break;
+		case Judgement::hyu:
+			g.setColour(Colours::aliceblue);
+			break;
+		case Judgement::oops:
+			g.setColour(Colours::crimson);
+			break;
+		default:
+			g.setColour(Colours::orange);
+			break;
+		}
 		std::cout << "jkey currently down" << std::endl;
 		g.setColour(Colours::gold);
 		g.fillRect(Rectangle<float>(effectWidth * 2, judgement_start, effectWidth, judgement_end));
@@ -124,6 +174,24 @@ void NoteManager::paint(Graphics& g)
 	}
 	if (kkey.isCurrentlyDown()) {
 		std::cout << "jkey currently down" << std::endl;
+		switch (noteDeque[3].front().state)
+		{
+		case Judgement::wow:
+			g.setColour(Colours::gold);
+			break;
+		case Judgement::ok:
+			g.setColour(Colours::silver);
+			break;
+		case Judgement::hyu:
+			g.setColour(Colours::aliceblue);
+			break;
+		case Judgement::oops:
+			g.setColour(Colours::crimson);
+			break;
+		default:
+			g.setColour(Colours::orange);
+			break;
+		}
 		g.setColour(Colours::gold);
 		g.fillRect(Rectangle<float>(effectWidth * 3, judgement_start, effectWidth, judgement_end));
 		g.setColour(Colours::green);
@@ -140,8 +208,8 @@ void NoteManager::resized()
 bool NoteManager::keyPressed(const KeyPress& key)
 {
 
-	const float judgement_start = getHeight() / 12 * 10.5; // 판정포인트 시작y
-	const float judgement_end = judgement_start + getHeight() / 30; // 판정포인트 끝y
+	const int judgement_start = getHeight() / 12 * 10.5; // 판정포인트 시작y
+	const int judgement_end = judgement_start + getHeight() / 30; // 판정포인트 끝y
 	int index;
 	if (key == dkey)
 	{
@@ -149,6 +217,8 @@ bool NoteManager::keyPressed(const KeyPress& key)
 		index = 0;
 		const float note_startY = noteDeque[index].front().rect.getY();
 		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
+		std::cout << "note_startY: " << note_startY << std::endl;
+		assert(note_startY < getHeight());
 		judgeNote(index, note_startY, note_endY, judgement_start, judgement_end);
 		return true;
 	}
@@ -197,30 +267,34 @@ void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 		noteDeque[location].push_back(Note((1280 / 12 * location), 0, 1280 / 12, 10));
 	}
 }
-void NoteManager::judgeNote(const short& idx,
-	const float& nstartY, const float& nendY, const float& jstartY, const float& jendY)
+void NoteManager::judgeNote(const short& idx, const float& nstartY, const float& nendY, const float& jstartY, const float& jendY)
 {
-	if (!noteDeque[idx].empty()) {
-		if (nstartY > jstartY - getHeight() / 5 && nstartY + nendY < jstartY
-			|| nstartY > jendY) {
+	assert(nstartY < getHeight() || nendY < getHeight());
+	if (!noteDeque[idx].empty() && noteDeque[idx].front().state == Judgement::none) {
+		// 노트의 위치가 맵의 절반만큼 내려오고 판정선보다 위거나 판정선보다 아래일 경우
+		if (nstartY < jstartY - getHeight() / 3 &&  nendY < jstartY || nstartY > jendY) {
+			noteDeque[idx].front().state = Judgement::oops;
 			score.push(Judgement::oops);
 			combo = 0;
 			std::cout << "====== oops!!! ======" << std::endl;
 			std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
 		}
-		else if (nstartY < jstartY && nstartY + nendY < jendY) {
+		else if (nstartY < jstartY && nendY < jendY) {
+			noteDeque[idx].front().state = Judgement::ok;
 			score.push(Judgement::ok);
 			combo++;
 			std::cout << "===== ok!!! =====" << std::endl;
 			std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
 		}
-		else if (nstartY > jstartY && nstartY + nendY > jendY) {
+		else if (nstartY > jstartY &&  nendY > jendY) {
+			noteDeque[idx].front().state = Judgement::hyu;
 			score.push(Judgement::hyu);
 			combo++;
 			std::cout << "====== hyu!!! ======" << std::endl;
 			std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
 		}
-		else if (nstartY >= jstartY && nstartY + nendY <= jendY) {
+		else if (nstartY >= jstartY && nendY <= jendY) {
+			noteDeque[idx].front().state = Judgement::wow;
 			score.push(Judgement::wow);
 			combo++;
 			std::cout << "====== wow!!! =======" << std::endl;
