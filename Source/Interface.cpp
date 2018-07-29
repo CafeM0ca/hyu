@@ -2,13 +2,14 @@
 
 Interface::Interface() 
 {
-//	setOpaque(true);		// 컴포넌트에 가려진 뒷부분 최적화
-	setWantsKeyboardFocus(true); // 전체 컴포넌트에 대해 입력을 받는다.
+	setOpaque(true);		// 컴포넌트에 가려진 뒷부분 최적화
+	//setWantsKeyboardFocus(true); // 전체 컴포넌트에 대해 입력을 받는다.
 //	addAndMakeVisible(songLayout);
 	addAndMakeVisible(noteManager);
 	addAndMakeVisible(map);
 	//audio.SelectSong();
     setSize (1280,720);
+	noteManager.generateNote();
 }
 
 Interface::~Interface()
@@ -19,11 +20,10 @@ void Interface::paint (Graphics& g)
 {
 		
 	g.fillAll(Colour(13,13,13));
-	// 여기서 조립
-	// repaint 흐름 막아놔야함
-	//
-	noteManager.generateNote(/* total note */);	
-
+//	g.setColour(Colour(255,91,51));
+//	g.fillRect(Rectangle<int>(0, 0, 100, 100));
+	//Rectanble을 만들어 상대적으로 접근할 필요가 있음. KeyComponent에도 마찬가지로
+	
 }
 
 void Interface::resized()
