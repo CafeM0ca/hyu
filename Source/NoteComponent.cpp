@@ -2,10 +2,10 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "NoteComponent.h"
 Note::Note(const float& x, const float& y, const float& width, const float& height)
-	: rect(x, y, width, height)
+	: rect(x, y, width, height), state(Judgement::none)
 {
 	DBG("Note Component ctor");
-	
+
 }
 Note::~Note()
 {
@@ -52,26 +52,28 @@ void NoteManager::update()
 			if (r == 1)
 				activePos[i]++;
 		}
-		if (!noteDeque[i].empty() && noteDeque[i].front().state != Judgement::none) {
+		while (!noteDeque[i].empty()) {
+			if (noteDeque[i].front().state == Judgement::none || noteDeque[i].front().rect.getY() < getHeight()) {
+				break;
+			}
 			std::cout << "pop note" << std::endl;
 			noteDeque[i].pop_front();
 			activePos[i]--;										// pop된 노트 개수만큼 현재 위치 조절
 		}
-
-		if (!noteDeque[i].empty()) {									// 검사 안하면 에러발생 가능성!
+		if (!noteDeque[i].empty()) {
 																		// 2. 정리된 deque의 rect.y를 조절 
 			int currentPos = 0;
 			for (auto& j : noteDeque[i]) {
 				if (currentPos < activePos[i]) {
 					//	std::cout << currentPos << " note.y += 10" << std::endl;
 					j.rect.setY(j.rect.getY() + /*10*/ 15);
+					std::cout << j.rect.getY() << std::endl;
 					currentPos++;
 				}
 				else break;
 			}
 		}
 	}
-
 }
 void NoteManager::paint(Graphics& g)
 {
@@ -115,7 +117,7 @@ void NoteManager::paint(Graphics& g)
 			g.setColour(Colours::orange);
 			break;
 		}
-		g.fillRect(Rectangle<float>(0              , judgement_start, effectWidth, judgement_end));
+		g.fillRect(Rectangle<float>(0, judgement_start, effectWidth, judgement_end));
 		g.setColour(Colours::green);
 		g.setFont(Font(Font::bold, 100.0f));
 		g.drawText(std::to_string(combo), 0, 0, effectWidth, getHeight(), Justification::centred);
@@ -141,7 +143,7 @@ void NoteManager::paint(Graphics& g)
 			break;
 		}
 		g.setColour(Colours::gold);
-		g.fillRect(Rectangle<float>(effectWidth    , judgement_start, effectWidth, judgement_end));
+		g.fillRect(Rectangle<float>(effectWidth, judgement_start, effectWidth, judgement_end));
 		g.setColour(Colours::green);
 		g.setFont(Font(Font::bold, 100.0f));
 		g.drawText(std::to_string(combo), effectWidth, 0, effectWidth, getHeight(), Justification::centred);
@@ -203,7 +205,8 @@ void NoteManager::paint(Graphics& g)
 }
 void NoteManager::resized()
 {
-
+	judgement_start = getHeight() / 12 * 10.5; // 판정포인트 시작y
+	judgement_end = judgement_start + getHeight() / 30; // 판정포인트 끝y
 }
 bool NoteManager::keyPressed(const KeyPress& key)
 {
@@ -218,7 +221,7 @@ bool NoteManager::keyPressed(const KeyPress& key)
 		const float note_startY = noteDeque[index].front().rect.getY();
 		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
 		std::cout << "note_startY: " << note_startY << std::endl;
-		assert(note_startY < getHeight());
+		//assert(note_startY < getHeight());
 		judgeNote(index, note_startY, note_endY, judgement_start, judgement_end);
 		return true;
 	}
@@ -269,10 +272,10 @@ void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 }
 void NoteManager::judgeNote(const short& idx, const float& nstartY, const float& nendY, const float& jstartY, const float& jendY)
 {
-	assert(nstartY < getHeight() || nendY < getHeight());
+	//assert(nstartY < getHeight() || nendY < getHeight());
 	if (!noteDeque[idx].empty() && noteDeque[idx].front().state == Judgement::none) {
 		// 노트의 위치가 맵의 절반만큼 내려오고 판정선보다 위거나 판정선보다 아래일 경우
-		if (nstartY < jstartY - getHeight() / 3 &&  nendY < jstartY || nstartY > jendY) {
+		if ((nstartY > jstartY - getHeight() / 3 && nendY < jstartY) || nstartY > jendY) {
 			noteDeque[idx].front().state = Judgement::oops;
 			score.push(Judgement::oops);
 			combo = 0;
@@ -286,7 +289,7 @@ void NoteManager::judgeNote(const short& idx, const float& nstartY, const float&
 			std::cout << "===== ok!!! =====" << std::endl;
 			std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
 		}
-		else if (nstartY > jstartY &&  nendY > jendY) {
+		else if (nstartY < jendY &&  nendY > jendY) {
 			noteDeque[idx].front().state = Judgement::hyu;
 			score.push(Judgement::hyu);
 			combo++;
