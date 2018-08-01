@@ -50,8 +50,8 @@ void Map::resized()
     // components that your component contains..
 	// 
 	float width = getWidth() / 4;
-	float urteil_height = getHeight()/12*10.5; // 판정포인트 시작y
-	float keyframe_height = urteil_height + getHeight()/30; // 키입력칸 시작 y
+	float urteil_height = getHeight()/12*10; // 판정포인트 시작y
+	float keyframe_height = urteil_height + 40; // 키입력칸 시작 y
 	/*
 	vertical1.setBounds(0,       -10, width, getHeight()+10);   
 	vertical2.setBounds(width,   -10, width, getHeight()+10);   
@@ -73,7 +73,7 @@ void Map::resized()
 
 
 
-	urteil    .setBounds(0, urteil_height, getWidth(), getHeight()/30);
+	urteil    .setBounds(0, urteil_height, getWidth(), 40);
 	key_frame1.setBounds(0,       keyframe_height, width, getHeight() - keyframe_height);
 	key_frame2.setBounds(width,   keyframe_height, width, getHeight() - keyframe_height);
 	key_frame3.setBounds(width*2, keyframe_height, width, getHeight() - keyframe_height);

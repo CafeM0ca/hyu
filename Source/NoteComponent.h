@@ -1,5 +1,6 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+#include <array>
 #include <deque>
 #include <queue>
 #include <string>
@@ -65,16 +66,22 @@ public:
 private:
 	std::deque<Note> noteDeque[4];
 	std::queue<Judgement> score;
-	int activePos[4]{ 0 };											// 큐에서 활성화된 노트 pos 나중에 Note class로 빼야할듯
+	std::array<Colour, 4> keyPressedColor{ Colours::orangered, Colours::orangered, Colours::orangered, Colours::orangered};
+	std::array<int, 4> activePos{ 0, };											// 큐에서 활성화된 노트 pos 나중에 Note class로 빼야할듯
+	std::array<int, 4> nstartY, nendY; 
+	int jstartY = 0, jendY = 0;
 	int combo = 0;
-	int jstartY, jendY;
 	bool initNote = false;
-	void judgeNote(const short&, const int&, const int&);
+	const int noteRails = 4;													//  노트 떨어지는 레일 
+	int pressEffectWidth = 0; 
+	Label comboLabel;
 	const KeyPress dkey = KeyPress('d');
 	const KeyPress fkey = KeyPress('f');
 	const KeyPress jkey = KeyPress('j');
 	const KeyPress kkey = KeyPress('k');
-	const KeyPress myKey[4]{ KeyPress('d'), KeyPress('f'), KeyPress('j'), KeyPress('k') };
+	
+
+	void judgeNote(const short&, const int&, const int&);
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NoteManager)
 };
 

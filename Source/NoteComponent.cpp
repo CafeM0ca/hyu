@@ -12,67 +12,62 @@ Note::~Note()
 }
 NoteManager::NoteManager()
 {
-	setFramesPerSecond(60);
-	setWantsKeyboardFocus(true);
+	setFramesPerSecond(120);
+	addAndMakeVisible(comboLabel);
+	comboLabel.setJustificationType(Justification::centred);
+	comboLabel.setFont(Font(50.0f));
 }
-
 NoteManager::~NoteManager()
 {
-
+	
 }
-
-
 void NoteManager::update()
 {
-	// 활성화된 노트까지 매 주기마다 y값 수정
-	//std::cout << "--------------active note: " << activePos <<  "-----------------------" << std::endl; 
-	/*
-	Rectangle<float> *ptr = nullptr;
-	int popcnt = 0;
-	for (int i = 0; i < notePos; i++) {
-	ptr = &noteDeque.at(i).rect;
-	if (ptr->getY() > getHeight()) {
-	noteDeque.pop_front();
-	popcnt++;
-	}
-	else {
-	ptr->setY(ptr->getY()+10);
-	}
-	}
-	notePos -= popcnt;
-	notePos++;		// 매 초마다 노트수 증가
-	*/
-	// 1. 노트가 바닥치기 전까지 다 pop 
-	for (int i = 0; i < 4; i++) {
+	// 향후 비동기로 레일 별로 async해줘야한다. 아래 로직을 처리해주는 함수를 만들고 처리
+	for (int i = 0; i < noteRails; i++) {
+		// 선제 조건을 이전 노트의 Y값에 따라 정의하여 조절가능.			
 		if (activePos[i] < noteDeque[i].size()) {
 			Random rand;
 			rand.setSeedRandomly();
-			auto r = rand.getSystemRandom().nextInt(Range<int>(0, 30));
+			auto r = rand.getSystemRandom().nextInt(Range<int>(0, 300));
 			if (r == 1)
 				activePos[i]++;
 		}
+		
+		// 1. 노트가 소모되기 전까지 다 pop 
 		while (!noteDeque[i].empty()) {
-			if (noteDeque[i].front().state != Judgement::none) {
-				std::cout << "pop note" << std::endl;
+			if (noteDeque[i].front().state != Judgement::none) {								// keyPressed() 함수를 통해 처리된 노트
+				//std::cout << "note status is not Judgement::noen. pop note" << std::endl;
 				noteDeque[i].pop_front();
-				activePos[i]--;										
+				activePos[i]--;
 			}
-			else if (noteDeque[i].front().rect.getY() >= jendY) {
-				std::cout << "pop note" << std::endl;
+			else if (noteDeque[i].front().rect.getY() >= jendY + noteDeque[i].front().rect.getHeight()) {	// 눌리지 않은 노트 처리
+				//std::cout << "nstartY over. pop note" << std::endl;
+				score.push(Judgement::oops);
+				keyPressedColor[i] = Colours::crimson;
+				comboLabel.setBounds(0, 0, getWidth(), jstartY);
+				comboLabel.setBounds(pressEffectWidth * i, 0, pressEffectWidth, jendY);
+				comboLabel.setColour(Label::textColourId, Colours::crimson);
+				comboLabel.setColour(Label::outlineColourId, Colours::orangered);
+				comboLabel.setText("oops", NotificationType::dontSendNotification);
 				noteDeque[i].pop_front();
-				activePos[i]--;										// pop된 노트 개수만큼 현재 위치 조절
+				activePos[i]--;																		    // pop된 노트 개수만큼 현재 위치 조절
+				combo = 0;
 			}
 			else break;
 		}
-		if (!noteDeque[i].empty()) {
-																		// 2. 정리된 deque의 rect.y를 조절 
+
+	// 2. 정리된 deque의 rect.y를 조절 
+	if (!noteDeque[i].empty()) {
+			nstartY[i] = noteDeque[i].front().rect.getY();												// 판정에 쓰일 노트좌표
+			nendY[i] = nstartY[i] + noteDeque[i].front().rect.getHeight();		
 			int currentPos = 0;
 			for (auto& j : noteDeque[i]) {
 				if (currentPos < activePos[i]) {
-					//	std::cout << currentPos << " note.y += 10" << std::endl;
-					j.rect.setY(j.rect.getY() + /*10*/ 15);
-					std::cout << j.rect.getY() << std::endl;
+					j.rect.setY(j.rect.getY() + 15);
 					currentPos++;
+					//std::cout << j.rect.getY() << std::endl;
+					//std::cout << currentPos << " note.y += 10" << std::endl;
 				}
 				else break;
 			}
@@ -81,10 +76,12 @@ void NoteManager::update()
 }
 void NoteManager::paint(Graphics& g)
 {
+	// remove afterimage
 	g.fillAll(Colour(13, 13, 13));
 
+	// draw Note 
 	g.setColour(Colours::fuchsia);
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < noteRails; i++)
 	{
 		if (!noteDeque[i].empty()) {
 			int currentPos = 0;
@@ -97,161 +94,43 @@ void NoteManager::paint(Graphics& g)
 			}
 		}
 	}
-	float effectWidth = getWidth() / 4;
-
+	// when keypressed, color painting judgement line
 	if (dkey.isCurrentlyDown()) {
-		std::cout << "dkey currently down" << std::endl;
-		switch (noteDeque[0].front().state)
-		{
-		case Judgement::wow:
-			g.setColour(Colours::gold);
-			break;
-		case Judgement::ok:
-			g.setColour(Colours::silver);
-			break;
-		case Judgement::hyu:
-			g.setColour(Colours::aliceblue);
-			break;
-		case Judgement::oops:
-			g.setColour(Colours::crimson);
-			break;
-		default:
-			g.setColour(Colours::orange);
-			break;
-		}
-		g.fillRect(Rectangle<float>(0, jstartY, effectWidth, jendY));
-		g.setColour(Colours::green);
-		g.setFont(Font(Font::bold, 100.0f));
-		g.drawText(std::to_string(combo), 0, 0, effectWidth, getHeight(), Justification::centred);
+		g.setColour(keyPressedColor[0]);
+		g.fillRect(Rectangle<float>(0, jstartY, pressEffectWidth, jendY));
 	}
 	if (fkey.isCurrentlyDown()) {
-		std::cout << "fkey currently down" << std::endl;
-		switch (noteDeque[1].front().state)
-		{
-		case Judgement::wow:
-			g.setColour(Colours::gold);
-			break;
-		case Judgement::ok:
-			g.setColour(Colours::silver);
-			break;
-		case Judgement::hyu:
-			g.setColour(Colours::aliceblue);
-			break;
-		case Judgement::oops:
-			g.setColour(Colours::crimson);
-			break;
-		default:
-			g.setColour(Colours::orange);
-			break;
-		}
-		g.setColour(Colours::gold);
-		g.fillRect(Rectangle<float>(effectWidth, jstartY, effectWidth, jendY));
-		g.setColour(Colours::green);
-		g.setFont(Font(Font::bold, 100.0f));
-		g.drawText(std::to_string(combo), effectWidth, 0, effectWidth, getHeight(), Justification::centred);
+		g.setColour(keyPressedColor[1]);
+		g.fillRect(Rectangle<float>(pressEffectWidth, jstartY, pressEffectWidth, jendY));
 	}
 	if (jkey.isCurrentlyDown()) {
-		switch (noteDeque[2].front().state)
-		{
-		case Judgement::wow:
-			g.setColour(Colours::gold);
-			break;
-		case Judgement::ok:
-			g.setColour(Colours::silver);
-			break;
-		case Judgement::hyu:
-			g.setColour(Colours::aliceblue);
-			break;
-		case Judgement::oops:
-			g.setColour(Colours::crimson);
-			break;
-		default:
-			g.setColour(Colours::orange);
-			break;
-		}
-		std::cout << "jkey currently down" << std::endl;
-		g.setColour(Colours::gold);
-		g.fillRect(Rectangle<float>(effectWidth * 2, jstartY, effectWidth, jendY));
-		g.setColour(Colours::green);
-		g.setFont(Font(Font::bold, 100.0f));
-		g.drawText(std::to_string(combo), effectWidth * 2, 0, effectWidth, getHeight(), Justification::centred);
+		g.setColour(keyPressedColor[2]);
+		g.fillRect(Rectangle<float>(pressEffectWidth * 2, jstartY, pressEffectWidth, jendY));
 	}
 	if (kkey.isCurrentlyDown()) {
-		std::cout << "jkey currently down" << std::endl;
-		switch (noteDeque[3].front().state)
-		{
-		case Judgement::wow:
-			g.setColour(Colours::gold);
-			break;
-		case Judgement::ok:
-			g.setColour(Colours::silver);
-			break;
-		case Judgement::hyu:
-			g.setColour(Colours::aliceblue);
-			break;
-		case Judgement::oops:
-			g.setColour(Colours::crimson);
-			break;
-		default:
-			g.setColour(Colours::orange);
-			break;
-		}
-		g.setColour(Colours::gold);
-		g.fillRect(Rectangle<float>(effectWidth * 3, jstartY, effectWidth, jendY));
-		g.setColour(Colours::green);
-		g.setFont(Font(Font::bold, 100.0f));
-		g.drawText(std::to_string(combo), effectWidth * 3, 0, effectWidth, getHeight(), Justification::centred);
+		g.setColour(keyPressedColor[3]);
+		g.fillRect(Rectangle<float>(pressEffectWidth * 3, jstartY, pressEffectWidth, jendY));
 	}
-
-
 }
 void NoteManager::resized()
 {
-	jstartY = getHeight() / 12 * 10.5; // 판정포인트 시작y
-	jendY = jstartY + getHeight() / 30; // 판정포인트 끝y
+	jstartY = getHeight() / 12 * 10; // 판정포인트 시작y
+	jendY = jstartY + 40; // 판정포인트 끝y
+	pressEffectWidth = getWidth() / 4;
 }
 bool NoteManager::keyPressed(const KeyPress& key)
 {
-	int index;
-	if (key == dkey)
-	{
-		std::cout << "keyPressed dkey" << std::endl;
-		index = 0;
-		const float note_startY = noteDeque[index].front().rect.getY();
-		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
-		std::cout << "note_startY: " << note_startY << std::endl;
-		//assert(note_startY < getHeight());
-		judgeNote(index, note_startY, note_endY);
+	if (const int index = [this, key]()->auto {
+				if      (key == dkey) return 0;
+				else if (key == fkey) return 1;
+				else if (key == jkey) return 2;
+				else if (key == kkey) return 3;
+				else				  return -1;
+			}(); index >= 0 && index <= 3) {
+		if(!noteDeque[index].empty() && nstartY[index] > getHeight() / 2)
+			judgeNote(index, nstartY[index], nendY[index]);
 		return true;
-	}
-	else if (key == fkey)
-	{
-		std::cout << "keyPressed fkey" << std::endl;
-		index = 1;
-		const float note_startY = noteDeque[index].front().rect.getY();
-		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
-		judgeNote(index, note_startY, note_endY);
-		return true;
-	}
-	else if (key == jkey)
-	{
-		std::cout << "keyPressed jkey" << std::endl;
-		index = 2;
-		const float note_startY = noteDeque[index].front().rect.getY();
-		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
-		judgeNote(index, note_startY, note_endY);
-		return true;
-	}
-	else if (key == kkey)
-	{
-		std::cout << "keyPressed kkey" << std::endl;
-		index = 3;
-		const float note_startY = noteDeque[index].front().rect.getY();
-		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
-		judgeNote(index, note_startY, note_endY);
-		return true;
-	}
-	return false;
+	} else return false;
 }
 void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 {
@@ -263,49 +142,63 @@ void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 	*/
 	Random rand;
 	rand.setSeedRandomly();
-	auto pwid = getParentWidth() / 3;
-	std::cout << pwid << std::endl;
 	for (int i = 0; i < playTime; i++) {
-		auto location = rand.getSystemRandom().nextInt(Range<int>(0, 4));
-		noteDeque[location].push_back(Note((1280 / 12 * location), 0, 1280 / 12, 10));
+		auto location = rand.getSystemRandom().nextInt(Range<int>(0, noteRails));
+		noteDeque[location].push_back(Note((1280 / 12 * location), 0, 1280 / 12, 15));
 	}
 }
 void NoteManager::judgeNote(const short& idx, const int& nstartY, const int& nendY)
 {
+	//std::cout << "jstartY : " << jstartY << ", jendY : " << jendY << std::endl;
+	//std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
 	//assert(nstartY < getHeight() || nendY < getHeight());
-	if (!noteDeque[idx].empty() && noteDeque[idx].front().state == Judgement::none) {
-		// 노트의 위치가 맵의 절반만큼 내려오고 판정선보다 위거나 판정선보다 아래일 경우
-		if ((nstartY > jstartY - getHeight() / 3 && nendY < jstartY) || nstartY > jendY) {
+	//if (!noteDeque[idx].empty() && noteDeque[idx].front().rect.getY() > getHeight() && noteDeque[idx].front().state == Judgement::none) {
+	if (noteDeque[idx].front().state == Judgement::none) {
+		comboLabel.setBounds(pressEffectWidth * idx, 0, pressEffectWidth, jendY);
+		if (nendY < jstartY || nstartY > jendY) {											// note 가 판정선에 걸치지 않는 경우
+			combo = 0;
 			noteDeque[idx].front().state = Judgement::oops;
 			score.push(Judgement::oops);
-			combo = 0;
-			std::cout << "====== oops!!! ======" << std::endl;
-			std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
+
+			keyPressedColor[idx] = Colours::crimson;
+			comboLabel.setColour(Label::textColourId, Colours::crimson);
+			comboLabel.setColour(Label::outlineColourId, Colours::orangered);
+			comboLabel.setText("oops", NotificationType::dontSendNotification);
 		}
-		else if (nstartY < jstartY && nendY < jendY) {
+		else if (nstartY < jstartY && nendY < jendY) {										// note 가 판정선 윗쪽에 걸치는 경우
+			combo++;
 			noteDeque[idx].front().state = Judgement::ok;
 			score.push(Judgement::ok);
-			combo++;
-			std::cout << "===== ok!!! =====" << std::endl;
-			std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
+
+			keyPressedColor[idx] = Colours::silver;
+			comboLabel.setColour(Label::textColourId, Colours::silver);
+			comboLabel.setColour(Label::outlineColourId, Colours::orangered);
+			comboLabel.setText("ok\n" + std::to_string(combo), NotificationType::dontSendNotification);
 		}
-		else if (nstartY < jendY &&  nendY > jendY) {
+		else if (nstartY < jendY &&  nendY > jendY) {										// note 가 판정선 아래에 걸치는 경우
+			combo++;
 			noteDeque[idx].front().state = Judgement::hyu;
 			score.push(Judgement::hyu);
-			combo++;
-			std::cout << "====== hyu!!! ======" << std::endl;
-			std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
+
+			keyPressedColor[idx] = Colours::aliceblue;
+			comboLabel.setColour(Label::textColourId, Colours::aliceblue);
+			comboLabel.setColour(Label::outlineColourId, Colours::orangered);
+			comboLabel.setText("hyu\n" + std::to_string(combo), NotificationType::dontSendNotification);
 		}
-		else if (nstartY >= jstartY && nendY <= jendY) {
+		else if (nstartY >= jstartY && nendY <= jendY) {									// note 가 판정선 안에 들어가는 경우
+			combo++;
 			noteDeque[idx].front().state = Judgement::wow;
 			score.push(Judgement::wow);
-			combo++;
-			std::cout << "====== wow!!! =======" << std::endl;
-			std::cout << "nstartY: " << nstartY << ", nendY: " << nendY << std::endl;
+
+			keyPressedColor[idx] = Colours::gold;
+			comboLabel.setColour(Label::textColourId, Colours::gold);
+			comboLabel.setColour(Label::outlineColourId, Colours::orangered);
+			comboLabel.setText("wow\n" + std::to_string(combo), NotificationType::dontSendNotification);
 		}
-		else {
-			// nothing do 
-			std::cout << "===== already note Y =====" << std::endl;
-		}
+	}
+	else {
+		//std::cout << "note under half line" << std::endl;
+		keyPressedColor[idx] = Colours::orangered;
+		comboLabel.setText("", NotificationType::dontSendNotification);
 	}
 }
