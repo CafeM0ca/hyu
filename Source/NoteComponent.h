@@ -70,6 +70,8 @@ private:
 	int jstartY, jendY;
 	bool initNote = false;
 	void judgeNote(const short&, const int&, const int&);
+	int note_startY;
+	int note_endY; 
 	const KeyPress dkey = KeyPress('d');
 	const KeyPress fkey = KeyPress('f');
 	const KeyPress jkey = KeyPress('j');
