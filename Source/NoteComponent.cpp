@@ -13,6 +13,7 @@ Note::~Note()
 NoteManager::NoteManager()
 {
 	setFramesPerSecond(120);
+	setWantsKeyboardFocus(true);
 	addAndMakeVisible(comboLabel);
 	comboLabel.setJustificationType(Justification::centred);
 	comboLabel.setFont(Font(50.0f));

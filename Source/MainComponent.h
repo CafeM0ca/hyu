@@ -4,11 +4,11 @@
 #include "Map.h"
 #include "SoundComponent.h"
 #include "NoteComponent.h"
-class Interface   : public Component
+class MainComponent   : public Component
 {
 public:
-    Interface();
-    ~Interface();
+    MainComponent();
+    ~MainComponent();
     void paint (Graphics& g) override;
     void resized() override;
 
@@ -16,5 +16,5 @@ private:
 	SoundComponent songLayout;
 	NoteManager noteManager;
 	Map map;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Interface)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
