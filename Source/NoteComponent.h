@@ -70,13 +70,16 @@ private:
 	int jstartY, jendY;
 	bool initNote = false;
 	void judgeNote(const short&, const int&, const int&);
-	int note_startY;
-	int note_endY; 
+	int nstartY[4], nendY[4]; 
+	Label comboLabel;
 	const KeyPress dkey = KeyPress('d');
 	const KeyPress fkey = KeyPress('f');
 	const KeyPress jkey = KeyPress('j');
 	const KeyPress kkey = KeyPress('k');
-	const KeyPress myKey[4]{ KeyPress('d'), KeyPress('f'), KeyPress('j'), KeyPress('k') };
+	Colour dkeyPressedColor;
+	Colour fkeyPressedColor;
+	Colour jkeyPressedColor;
+	Colour kkeyPressedColor;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NoteManager)
 };
 
