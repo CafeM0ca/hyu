@@ -1,4 +1,3 @@
-
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "NoteComponent.h"
 Note::Note(const float& x, const float& y, const float& width, const float& height)
@@ -53,12 +52,17 @@ void NoteManager::update()
 				activePos[i]++;
 		}
 		while (!noteDeque[i].empty()) {
-			if (noteDeque[i].front().state == Judgement::none || noteDeque[i].front().rect.getY() < getHeight()) {
-				break;
+			if (noteDeque[i].front().state != Judgement::none) {
+				std::cout << "pop note" << std::endl;
+				noteDeque[i].pop_front();
+				activePos[i]--;										
 			}
-			std::cout << "pop note" << std::endl;
-			noteDeque[i].pop_front();
-			activePos[i]--;										// pop된 노트 개수만큼 현재 위치 조절
+			else if (noteDeque[i].front().rect.getY() >= jendY) {
+				std::cout << "pop note" << std::endl;
+				noteDeque[i].pop_front();
+				activePos[i]--;										// pop된 노트 개수만큼 현재 위치 조절
+			}
+			else break;
 		}
 		if (!noteDeque[i].empty()) {
 																		// 2. 정리된 deque의 rect.y를 조절 
@@ -93,8 +97,6 @@ void NoteManager::paint(Graphics& g)
 			}
 		}
 	}
-	const float judgement_start = getHeight() / 12 * 10.5; // 판정포인트 시작y
-	const float judgement_end = judgement_start + getHeight() / 30; // 판정포인트 끝y
 	float effectWidth = getWidth() / 4;
 
 	if (dkey.isCurrentlyDown()) {
@@ -117,7 +119,7 @@ void NoteManager::paint(Graphics& g)
 			g.setColour(Colours::orange);
 			break;
 		}
-		g.fillRect(Rectangle<float>(0, judgement_start, effectWidth, judgement_end));
+		g.fillRect(Rectangle<float>(0, jstartY, effectWidth, jendY));
 		g.setColour(Colours::green);
 		g.setFont(Font(Font::bold, 100.0f));
 		g.drawText(std::to_string(combo), 0, 0, effectWidth, getHeight(), Justification::centred);
@@ -143,7 +145,7 @@ void NoteManager::paint(Graphics& g)
 			break;
 		}
 		g.setColour(Colours::gold);
-		g.fillRect(Rectangle<float>(effectWidth, judgement_start, effectWidth, judgement_end));
+		g.fillRect(Rectangle<float>(effectWidth, jstartY, effectWidth, jendY));
 		g.setColour(Colours::green);
 		g.setFont(Font(Font::bold, 100.0f));
 		g.drawText(std::to_string(combo), effectWidth, 0, effectWidth, getHeight(), Justification::centred);
@@ -169,7 +171,7 @@ void NoteManager::paint(Graphics& g)
 		}
 		std::cout << "jkey currently down" << std::endl;
 		g.setColour(Colours::gold);
-		g.fillRect(Rectangle<float>(effectWidth * 2, judgement_start, effectWidth, judgement_end));
+		g.fillRect(Rectangle<float>(effectWidth * 2, jstartY, effectWidth, jendY));
 		g.setColour(Colours::green);
 		g.setFont(Font(Font::bold, 100.0f));
 		g.drawText(std::to_string(combo), effectWidth * 2, 0, effectWidth, getHeight(), Justification::centred);
@@ -195,7 +197,7 @@ void NoteManager::paint(Graphics& g)
 			break;
 		}
 		g.setColour(Colours::gold);
-		g.fillRect(Rectangle<float>(effectWidth * 3, judgement_start, effectWidth, judgement_end));
+		g.fillRect(Rectangle<float>(effectWidth * 3, jstartY, effectWidth, jendY));
 		g.setColour(Colours::green);
 		g.setFont(Font(Font::bold, 100.0f));
 		g.drawText(std::to_string(combo), effectWidth * 3, 0, effectWidth, getHeight(), Justification::centred);
@@ -205,14 +207,11 @@ void NoteManager::paint(Graphics& g)
 }
 void NoteManager::resized()
 {
-	judgement_start = getHeight() / 12 * 10.5; // 판정포인트 시작y
-	judgement_end = judgement_start + getHeight() / 30; // 판정포인트 끝y
+	jstartY = getHeight() / 12 * 10.5; // 판정포인트 시작y
+	jendY = jstartY + getHeight() / 30; // 판정포인트 끝y
 }
 bool NoteManager::keyPressed(const KeyPress& key)
 {
-
-	const int judgement_start = getHeight() / 12 * 10.5; // 판정포인트 시작y
-	const int judgement_end = judgement_start + getHeight() / 30; // 판정포인트 끝y
 	int index;
 	if (key == dkey)
 	{
@@ -222,7 +221,7 @@ bool NoteManager::keyPressed(const KeyPress& key)
 		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
 		std::cout << "note_startY: " << note_startY << std::endl;
 		//assert(note_startY < getHeight());
-		judgeNote(index, note_startY, note_endY, judgement_start, judgement_end);
+		judgeNote(index, note_startY, note_endY);
 		return true;
 	}
 	else if (key == fkey)
@@ -231,7 +230,7 @@ bool NoteManager::keyPressed(const KeyPress& key)
 		index = 1;
 		const float note_startY = noteDeque[index].front().rect.getY();
 		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
-		judgeNote(index, note_startY, note_endY, judgement_start, judgement_end);
+		judgeNote(index, note_startY, note_endY);
 		return true;
 	}
 	else if (key == jkey)
@@ -240,7 +239,7 @@ bool NoteManager::keyPressed(const KeyPress& key)
 		index = 2;
 		const float note_startY = noteDeque[index].front().rect.getY();
 		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
-		judgeNote(index, note_startY, note_endY, judgement_start, judgement_end);
+		judgeNote(index, note_startY, note_endY);
 		return true;
 	}
 	else if (key == kkey)
@@ -249,9 +248,10 @@ bool NoteManager::keyPressed(const KeyPress& key)
 		index = 3;
 		const float note_startY = noteDeque[index].front().rect.getY();
 		const float note_endY = note_startY + noteDeque[index].front().rect.getHeight();
-		judgeNote(index, note_startY, note_endY, judgement_start, judgement_end);
+		judgeNote(index, note_startY, note_endY);
 		return true;
 	}
+	return false;
 }
 void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 {
@@ -270,7 +270,7 @@ void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 		noteDeque[location].push_back(Note((1280 / 12 * location), 0, 1280 / 12, 10));
 	}
 }
-void NoteManager::judgeNote(const short& idx, const float& nstartY, const float& nendY, const float& jstartY, const float& jendY)
+void NoteManager::judgeNote(const short& idx, const int& nstartY, const int& nendY)
 {
 	//assert(nstartY < getHeight() || nendY < getHeight());
 	if (!noteDeque[idx].empty() && noteDeque[idx].front().state == Judgement::none) {

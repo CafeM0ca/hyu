@@ -67,8 +67,9 @@ private:
 	std::queue<Judgement> score;
 	int activePos[4]{ 0 };											// 큐에서 활성화된 노트 pos 나중에 Note class로 빼야할듯
 	int combo = 0;
+	int jstartY, jendY;
 	bool initNote = false;
-	void judgeNote(const short&, const float&, const float&, const float&, const float&);
+	void judgeNote(const short&, const int&, const int&);
 	const KeyPress dkey = KeyPress('d');
 	const KeyPress fkey = KeyPress('f');
 	const KeyPress jkey = KeyPress('j');
