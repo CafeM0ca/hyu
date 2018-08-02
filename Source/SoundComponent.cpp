@@ -117,14 +117,14 @@ bool SoundComponent::getIsSelected() const
 }
 
 
-Audio::Audio() :state(Stopped), file("./SoNakByul-hateduck.mp3")
+Audio::Audio() :state(Stopped), file("./Song/aya.wav")
 {
 	
 	formatManager.registerBasicFormats();       // [1]
-	//transportSource.addChangeListener(this);
+//	transportSource.addChangeListener(this);
 	changeState(Playing);
 	setAudioChannels (0, 2); 
-
+	SelectSong();
 }
 
 Audio::~Audio()
@@ -184,9 +184,12 @@ void Audio::resized()
 
 
 void Audio::SelectSong()
-{	
-
-	AudioFormatReader *reader = formatManager.createReaderFor(file);
+{
+	// debug
+	//	File file("./../../../Song/Defqwop-HeartAfire.mp3");
+	File file("./aya.mp3");
+	// release
+	auto *reader = formatManager.createReaderFor(file);
 	if(reader != nullptr)
 	{
 		//재생시간 
