@@ -5,7 +5,7 @@
 //==============================================================================
 /*
 */
-class SoundComponent    : public Component
+class SoundComponent    : public Component, public KeyListener
 {
 public:
     SoundComponent();
@@ -13,22 +13,17 @@ public:
 
     void paint (Graphics&) override;
     void resized() override;
-	bool keyPressed (const KeyPress&) override;
-	void loadSongList();	
-	void setSongTitle(const std::string&);
-	inline std::string& getNextSongTitle(); 
-	inline std::string& getPrevSongTitle();
-	inline std::string getSongTitle() const;
+	bool keyPressed (const KeyPress&, Component *) override;
 
-	// for change map
-	inline void changeIsSelected();
-	bool getIsSelected() const;
+	void loadSongList();	
+	bool isSongSelected() const { return songSelected; }
+	std::string getSongName() const { return songList.at(pos); }
 private:
-	std::vector<std::string> songList; std::vector<std::string>::iterator songListIter;
-	std::string songTitle;
-	const KeyPress wkey;
-	const KeyPress skey;
-	bool isSelected;
+	std::vector<std::string> songList; 
+	int pos = 0;
+	std::string songTitle{ "Press W or S" };
+	bool songSelected = false;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundComponent)
 };
 
@@ -46,7 +41,7 @@ public:
     void releaseResources() override;
 
     void resized() override;
-	void SelectSong();
+	void selectSong(const File&);
 	enum TransportState
 	{
 		Stopped,
@@ -54,23 +49,12 @@ public:
 		Playing,
 		Stopping
 	};
-	inline int GetSongLength(double len) const
-	{
-		return static_cast<int>(len);
-	}
-	inline TransportState GetState() const { return state; }
 	void changeState(TransportState newState);
-	inline String GetSongName() const { return file.getFileNameWithoutExtension(); }
-	inline String GetSongMap() const { return GetSongName()+".hm";	}
-	String GetSongData() { return file.loadFileAsString(); }
 	double duration; 
 private:
     AudioFormatManager formatManager;
     ScopedPointer<AudioFormatReaderSource> readerSource;
     AudioTransportSource transportSource;
     TransportState state;
-	
-	File file;
-
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Audio)
 };
