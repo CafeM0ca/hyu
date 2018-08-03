@@ -12,7 +12,7 @@ public:
     void resized() override;
 	bool keyPressed(const KeyPress&, Component *) override;
 private:
-	SoundComponent songLayout;
+	SoundComponent *songLayout = nullptr;
 	NoteManager noteManager;
 	Map map;
 	Audio song;

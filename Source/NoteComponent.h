@@ -63,6 +63,7 @@ public:
 	void resized() override;
 	bool keyPressed(const KeyPress&) override;
 	void generateNote(const short playTime = 300);
+	void clear();
 private:
 	std::deque<Note> noteDeque[4];
 	std::queue<Judgement> score;
@@ -74,12 +75,13 @@ private:
 	bool initNote = false;
 	const int noteRails = 4;													//  노트 떨어지는 레일 
 	int pressEffectWidth = 0; 
+	bool running = false;
 	Label comboLabel;
 	const KeyPress dkey = KeyPress('d');
 	const KeyPress fkey = KeyPress('f');
 	const KeyPress jkey = KeyPress('j');
 	const KeyPress kkey = KeyPress('k');
-	
+	Random rand;
 
 	void judgeNote(const short&, const int&, const int&);
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NoteManager)

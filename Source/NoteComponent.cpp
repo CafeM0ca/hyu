@@ -12,11 +12,12 @@ Note::~Note()
 }
 NoteManager::NoteManager()
 {
-	setFramesPerSecond(120);
+	setFramesPerSecond(80);
 	setWantsKeyboardFocus(true);
 	addAndMakeVisible(comboLabel);
 	comboLabel.setJustificationType(Justification::centred);
 	comboLabel.setFont(Font(50.0f));
+	rand.setSeedRandomly();
 }
 NoteManager::~NoteManager()
 {
@@ -27,14 +28,12 @@ void NoteManager::update()
 	// 향후 비동기로 레일 별로 async해줘야한다. 아래 로직을 처리해주는 함수를 만들고 처리
 	for (int i = 0; i < noteRails; i++) {
 		// 선제 조건을 이전 노트의 Y값에 따라 정의하여 조절가능.			
-		if (activePos[i] < noteDeque[i].size()) {
-			Random rand;
-			rand.setSeedRandomly();
+		if (activePos[i] < noteDeque[i].size() && running) {
 			auto r = rand.getSystemRandom().nextInt(Range<int>(0, 300));
 			if (r == 1)
 				activePos[i]++;
 		}
-		
+
 		// 1. 노트가 소모되기 전까지 다 pop 
 		while (!noteDeque[i].empty()) {
 			if (noteDeque[i].front().state != Judgement::none) {								// keyPressed() 함수를 통해 처리된 노트
@@ -58,10 +57,10 @@ void NoteManager::update()
 			else break;
 		}
 
-	// 2. 정리된 deque의 rect.y를 조절 
-	if (!noteDeque[i].empty()) {
+		// 2. 정리된 deque의 rect.y를 조절 
+		if (!noteDeque[i].empty()) {
 			nstartY[i] = noteDeque[i].front().rect.getY();												// 판정에 쓰일 노트좌표
-			nendY[i] = nstartY[i] + noteDeque[i].front().rect.getHeight();		
+			nendY[i] = nstartY[i] + noteDeque[i].front().rect.getHeight();
 			int currentPos = 0;
 			for (auto& j : noteDeque[i]) {
 				if (currentPos < activePos[i]) {
@@ -121,6 +120,28 @@ void NoteManager::resized()
 }
 bool NoteManager::keyPressed(const KeyPress& key)
 {
+	switch (key.getTextCharacter()) {
+	case 'd':
+		if(!noteDeque[0].empty() && nstartY[0] > getHeight() / 2)
+			judgeNote(0, nstartY[0], nendY[0]);
+		return true;
+	case 'f':
+		if(!noteDeque[1].empty() && nstartY[1] > getHeight() / 2)
+			judgeNote(1, nstartY[1], nendY[1]);
+		return true;
+	case 'j':
+		if(!noteDeque[2].empty() && nstartY[2] > getHeight() / 2)
+			judgeNote(2, nstartY[2], nendY[2]);
+		return true;
+	case 'k':
+		if(!noteDeque[3].empty() && nstartY[3] > getHeight() / 2)
+			judgeNote(3, nstartY[3], nendY[3]);
+		return true;
+	default:
+		return false;
+	}
+
+	/*
 	if (const int index = [this, key]()->auto {
 				if      (key == dkey) return 0;
 				else if (key == fkey) return 1;
@@ -132,6 +153,7 @@ bool NoteManager::keyPressed(const KeyPress& key)
 			judgeNote(index, nstartY[index], nendY[index]);
 		return true;
 	} else return false;
+	*/
 }
 void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 {
@@ -141,8 +163,7 @@ void NoteManager::generateNote(const short playTime /* 3분 00초 */)
 	노트의 개수는 1초당 1개꼴로 만들며 곡의 난이도나 템포에 따라 변동조절한다.
 	생성 알고리즘을 여기에서 정의.
 	*/
-	Random rand;
-	rand.setSeedRandomly();
+	running = true;
 	for (int i = 0; i < playTime; i++) {
 		auto location = rand.getSystemRandom().nextInt(Range<int>(0, noteRails));
 		noteDeque[location].push_back(Note((1280 / 12 * location), 0, 1280 / 12, 15));
@@ -202,4 +223,13 @@ void NoteManager::judgeNote(const short& idx, const int& nstartY, const int& nen
 		keyPressedColor[idx] = Colours::orangered;
 		comboLabel.setText("", NotificationType::dontSendNotification);
 	}
+}
+
+void NoteManager::clear()
+{
+	running = false;
+	for (int i = 0; i < noteRails; i++) 
+		noteDeque[i].clear();
+	combo = 0;
+	comboLabel.setText("", NotificationType::dontSendNotification);
 }

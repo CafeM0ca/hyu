@@ -42,14 +42,14 @@ public:
 
     void resized() override;
 	void selectSong(const File&);
-	enum TransportState
+	enum class TransportState
 	{
 		Stopped,
 		Starting,
-		Playing,
-		Stopping
+		Finish
 	};
 	void changeState(TransportState newState);
+	auto getState() const { return state; }
 	double duration; 
 private:
     AudioFormatManager formatManager;

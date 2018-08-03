@@ -12,13 +12,11 @@
 SoundComponent::SoundComponent()
 {
 
-	std::cout << "SoundComponent Ctor" << std::endl;
-	addKeyListener(this);
+//	std::cout << "SoundComponent Ctor" << std::endl;
 	loadSongList();
 }
 SoundComponent::~SoundComponent()
 {
-		
 }
 void SoundComponent::paint (Graphics& g)
 {
@@ -40,11 +38,8 @@ void SoundComponent::resized()
 
 bool SoundComponent::keyPressed(const KeyPress& key, Component *c)
 {
-	std::cout << "MainComponent keyPressed" << std::endl;
+//	std::cout << "SoundComponent keyPressed" << std::endl;
 	// no event = return false, else return true . no touch. is ok
-	if (c == this) {
-		std::cout << "same object" << std::endl;
-	}
 	if (!songList.empty()) {
 		if(key.getTextCharacter() == 's'  && pos < songList.size() - 1)
 		{
@@ -58,11 +53,9 @@ bool SoundComponent::keyPressed(const KeyPress& key, Component *c)
 			repaint();
 			return true;
 		}
-		
 		else if (key == KeyPress::returnKey) {
-			std::cout << "SoundComponent KeyPress return key" << std::endl;
+//			std::cout << "SoundComponent KeyPress return key" << std::endl;
 			songSelected = true;
-			removeKeyListener(this);	// 더 이상 SoundComponent가 키입력을 받지 않음
 			return false;		// MainComponent의  KeyPress로 전달됨
 		}
 	}
@@ -81,12 +74,12 @@ void SoundComponent::loadSongList()
 }
 
 
-Audio::Audio() :state(Stopped)
+Audio::Audio() :state(TransportState::Stopped)
 {
 	// prepareToPlay() -> getNextAudioBlock() -> releaseResource()
 	formatManager.registerBasicFormats();       // [1]
 	//transportSource.addChangeListener(this);
-	changeState(Stopped);
+	changeState(TransportState::Stopped);
 	setAudioChannels (0, 2); 
 }
 
@@ -133,10 +126,8 @@ void Audio::releaseResources()
 {
     // This will be called when the audio device stops, or when it is being
     // restarted due to a setting change.
-
-    // For more details, see the help for AudioProcessor::releaseResources()
-	// AudioSource의 구현부. 아무래도 AudioSource를 확인해야할듯.
 	transportSource.releaseResources();
+	changeState(TransportState::Finish);
 }
 
 void Audio::resized()
@@ -155,7 +146,6 @@ void Audio::selectSong(const File& file)
 	{
 		//재생시간 
 		duration = reader->lengthInSamples / reader->sampleRate; 
-		
 
 		//ScopedPointer는 스마트 포인터 같은 개념
 		ScopedPointer<AudioFormatReaderSource> newSource = new AudioFormatReaderSource(reader,true);
@@ -169,7 +159,7 @@ void Audio::selectSong(const File& file)
 		 */
 		transportSource.setSource(newSource,0,nullptr,reader->sampleRate);
 		readerSource = newSource.release();
-		changeState(Starting); // 파일 경로지정하고 다 셋팅한 후 Starting해야함.
+		changeState(TransportState::Starting); // 파일 경로지정하고 다 셋팅한 후 Starting해야함.
 	}
 }
  
@@ -182,20 +172,17 @@ void Audio::changeState (TransportState newState)
 		
 		switch (state)
 		{
-			case Stopped:        
+			case TransportState::Stopped:        
 				transportSource.setPosition (0.0);
 				break;
 			
-			case Starting:   
+			case TransportState::Starting:   
 				// start setSource로 설정되면 재생.
 				// 이 객체에 등록된 ChangeListener에 메시지를 보냄. 메시지를 보냄
 				transportSource.start();
 				break;
 				
-			case Playing: 
-				break;
-				
-			case Stopping:
+			case TransportState::Finish:
 				transportSource.stop();
 				break;
 		}
